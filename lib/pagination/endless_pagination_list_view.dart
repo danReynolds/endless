@@ -7,8 +7,8 @@ import 'package:endless/stream/endless_stream_list_view.dart';
 import 'package:endless/stream/endless_stream_list_view_data.dart';
 import 'package:flutter/material.dart';
 
-class EndlessPaginationListViewData<T> extends StatelessWidget {
-  final Future<List<T>> Function({int pageSize, int pageIndex}) loadMore;
+class EndlessPaginationListView<T> extends StatelessWidget {
+  final Future<List<T>> Function(int pageIndex) loadMore;
   final Widget Function(
     BuildContext context, {
     T item,
@@ -20,6 +20,7 @@ class EndlessPaginationListViewData<T> extends StatelessWidget {
   final EdgeInsets? padding;
   final EdgeInsets? itemPadding;
   final EndlessPaginationDelegate paginationDelegate;
+  final double? extentAfterFactor;
 
   final Widget Function(BuildContext context)? headerBuilder;
   final EndlessStateProperty<Widget>? headerBuilderState;
@@ -36,10 +37,11 @@ class EndlessPaginationListViewData<T> extends StatelessWidget {
   final Widget Function(BuildContext context)? loadingBuilder;
   final EndlessStateProperty<Widget>? loadingBuilderState;
 
-  const EndlessPaginationListViewData({
+  const EndlessPaginationListView({
     required this.loadMore,
     required this.itemBuilder,
     required this.paginationDelegate,
+    this.extentAfterFactor,
     this.controller,
     this.padding,
     this.itemPadding,
@@ -76,7 +78,7 @@ class EndlessPaginationListViewData<T> extends StatelessWidget {
           // a non-required public API could be omitted here and we wouldn't realize it.
           return EndlessStreamListView.fromData<T>(
             EndlessStreamListViewData<T>(
-              batchDelegate: paginationDelegate.convertToStreamBatchDelegate(),
+              extentAfterFactor: extentAfterFactor,
               itemBuilder: itemBuilder,
               loadMore: loadMore,
               controller: controller,

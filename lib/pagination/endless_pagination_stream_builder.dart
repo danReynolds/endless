@@ -5,10 +5,10 @@ import 'package:endless/stream/endless_stream_controller.dart';
 import 'package:flutter/material.dart';
 
 class EndlessPaginationData<T> {
-  final Future<List<T>> Function({int pageSize, int pageIndex}) loadMore;
+  final Future<List<T>> Function(int pageIndex) loadMore;
   final Widget Function({
     required Stream<List<T>> stream,
-    required void Function(int pageSize) loadMore,
+    required void Function() loadMore,
     required EndlessStreamController<T> controller,
     required bool loadOnSubscribe,
   }) builder;
@@ -28,10 +28,10 @@ class EndlessPaginationData<T> {
 // Adapter for an EndlessPagination to an EndlessStream so that it
 // can then reuse the scroll view builder logic of the EndlessStream
 class EndlessPaginationStreamBuilder<T> extends StatefulWidget {
-  final Future<List<T>> Function({int pageSize, int pageIndex}) loadMore;
+  final Future<List<T>> Function(int pageIndex) loadMore;
   final Widget Function({
     required Stream<List<T>> stream,
-    required void Function(int pageSize) loadMore,
+    required void Function() loadMore,
     required EndlessStreamController<T> controller,
     required bool loadOnSubscribe,
   }) builder;
@@ -47,7 +47,7 @@ class EndlessPaginationStreamBuilder<T> extends StatefulWidget {
     required this.builder,
     required this.paginationDelegate,
     this.controller,
-    this.initialLoad = false,
+    this.initialLoad = true,
     key,
   }) : super(key: key);
 
@@ -63,7 +63,7 @@ class EndlessPaginationStreamBuilder<T> extends StatefulWidget {
       controller: data.controller,
       builder: data.builder,
       paginationDelegate: data.paginationDelegate,
-      initialLoad: data.initialLoad ?? false,
+      initialLoad: data.initialLoad ?? true,
     );
   }
 }
@@ -110,18 +110,19 @@ class _EndlessPaginationStreamBuilderState<T>
     }
   }
 
-  _loadMore(int pageSize) async {
+  _loadMore() async {
     _cancelPageSubscription();
 
     // A stream is used for loading the page of data so that if the list view is reset
     // while still loading data, it can just cancel the first stream and discard the result.
     _pageStreamSubscription = Stream.fromFuture(
-      widget.loadMore(pageSize: pageSize, pageIndex: _pageIndex),
+      widget.loadMore(_pageIndex),
     ).listen(
       (newItems) {
         final maxPages = widget.paginationDelegate.maxPages;
-        final canLoadMore = newItems.length == pageSize &&
-            (maxPages == null || _pageIndex < maxPages - 1);
+        final canLoadMore =
+            newItems.length == widget.paginationDelegate.pageSize &&
+                (maxPages == null || _pageIndex < maxPages - 1);
 
         _streamController.sink.add(newItems);
 

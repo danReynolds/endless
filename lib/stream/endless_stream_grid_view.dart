@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:endless/stream/endless_stream_batch_delegate.dart';
 import 'package:endless/stream/endless_stream_controller.dart';
 import 'package:endless/stream/endless_stream_grid_view_data.dart';
 import 'package:endless/stream/endless_stream_scroll_view.dart';
@@ -8,7 +7,7 @@ import 'package:endless/endless_state_property.dart';
 import 'package:flutter/material.dart';
 
 class EndlessStreamGridView<T> extends StatelessWidget {
-  final void Function(int batchSize) loadMore;
+  final void Function() loadMore;
   final Stream<List<T>> stream;
   final Function(BuildContext context, {T item, int index, int totalItems})
       itemBuilder;
@@ -16,7 +15,6 @@ class EndlessStreamGridView<T> extends StatelessWidget {
   final bool? loadOnSubscribe;
   final SliverGridDelegate gridDelegate;
   final EdgeInsets? padding;
-  final EndlessStreamBatchDelegate batchDelegate;
 
   final Widget Function(BuildContext context)? headerBuilder;
   final EndlessStateProperty<Widget>? headerBuilderState;
@@ -33,12 +31,14 @@ class EndlessStreamGridView<T> extends StatelessWidget {
   final Widget Function(BuildContext context)? loadingBuilder;
   final EndlessStateProperty<Widget>? loadingBuilderState;
 
+  final double? extentAfterFactor;
+
   const EndlessStreamGridView({
     required this.loadMore,
     required this.itemBuilder,
     required this.gridDelegate,
-    required this.batchDelegate,
     required this.stream,
+    this.extentAfterFactor,
     this.headerBuilder,
     this.headerBuilderState,
     this.emptyBuilder,
@@ -58,7 +58,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
   static EndlessStreamGridView fromData<Y>(EndlessStreamGridViewData<Y> data) {
     return EndlessStreamGridView<Y>(
       gridDelegate: data.gridDelegate,
-      batchDelegate: data.batchDelegate,
+      extentAfterFactor: data.extentAfterFactor,
       loadMore: data.loadMore,
       itemBuilder: data.itemBuilder,
       stream: data.stream,
@@ -98,7 +98,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
         );
       },
       loadMoreScrollViewData: EndlessStreamScrollViewData<T>(
-        batchDelegate: batchDelegate,
+        extentAfterFactor: extentAfterFactor,
         headerBuilder: headerBuilder,
         emptyBuilder: emptyBuilder,
         loadingBuilder: loadingBuilder,

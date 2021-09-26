@@ -20,6 +20,7 @@ class EndlessFirestoreStreamListView<T> extends StatelessWidget {
   final Query<T> query;
   final Future<void> Function(List<QueryDocumentSnapshot<T>> items)? onLoad;
   final EndlessFirestoreStreamBatchDelegate batchDelegate;
+  final double? extentAfterFactor;
 
   final SliverPersistentHeader Function(BuildContext context)? headerBuilder;
   final EndlessStateProperty<SliverPersistentHeader>? headerBuilderState;
@@ -40,6 +41,7 @@ class EndlessFirestoreStreamListView<T> extends StatelessWidget {
     required this.itemBuilder,
     required this.query,
     required this.batchDelegate,
+    this.extentAfterFactor,
     this.headerBuilder,
     this.headerBuilderState,
     this.emptyBuilder,
@@ -73,7 +75,7 @@ class EndlessFirestoreStreamListView<T> extends StatelessWidget {
         }) {
           return EndlessStreamListView.fromData<QueryDocumentSnapshot<T>>(
             EndlessStreamListViewData<QueryDocumentSnapshot<T>>(
-              batchDelegate: batchDelegate.convertToStreamBatchDelegate(),
+              extentAfterFactor: extentAfterFactor,
               itemBuilder: itemBuilder,
               loadMore: loadMore,
               controller: controller,

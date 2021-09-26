@@ -1,5 +1,4 @@
 import 'package:endless/endless_state_property.dart';
-import 'package:endless/stream/endless_stream_batch_delegate.dart';
 import 'package:endless/stream/endless_stream_controller.dart';
 import 'package:endless/stream/endless_stream_scroll_view_data.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class EndlessStreamGridViewData<T> extends EndlessStreamScrollViewData<T> {
   EndlessStreamGridViewData({
     required this.itemBuilder,
     required this.gridDelegate,
-    required EndlessStreamBatchDelegate batchDelegate,
+    required double? extentAfterFactor,
     required Widget Function(BuildContext context)? headerBuilder,
     required Widget Function(BuildContext context)? emptyBuilder,
     required Widget Function(BuildContext context)? loadingBuilder,
@@ -27,13 +26,13 @@ class EndlessStreamGridViewData<T> extends EndlessStreamScrollViewData<T> {
     required EndlessStateProperty<Widget>? loadingBuilderState,
     required EndlessStateProperty<Widget>? loadMoreBuilderState,
     required EndlessStateProperty<Widget>? footerBuilderState,
-    required void Function(int batchSize) loadMore,
+    required void Function() loadMore,
     required Stream<List<T>> stream,
     required EndlessStreamController<T>? controller,
     required EdgeInsets? padding,
     required bool? loadOnSubscribe,
   }) : super(
-          batchDelegate: batchDelegate,
+          extentAfterFactor: extentAfterFactor,
           headerBuilder: headerBuilder,
           emptyBuilder: emptyBuilder,
           loadingBuilder: loadingBuilder,

@@ -1,13 +1,13 @@
-import 'package:endless/stream/endless_stream_batch_delegate.dart';
 import 'package:endless/stream/endless_stream_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:endless/endless_state_property.dart';
 
+/// Data class for an EndlessStreamScrollView to ensure that all fields are passed
+/// when instantiated
 class EndlessStreamScrollViewData<T> {
-  final void Function(int batchSize) loadMore;
+  final void Function() loadMore;
   final Stream<List<T>> stream;
   final EndlessStreamController<T>? controller;
-  final EndlessStreamBatchDelegate batchDelegate;
 
   final EndlessStateProperty<Widget>? headerBuilderState;
   final EndlessStateProperty<Widget>? emptyBuilderState;
@@ -20,11 +20,15 @@ class EndlessStreamScrollViewData<T> {
   final Widget Function(BuildContext context)? loadMoreBuilder;
   final Widget Function(BuildContext context)? footerBuilder;
 
+  // Default to fetching the next batch once the scroll view has less than 40%
+  // of the available space left to scroll
+  double? extentAfterFactor;
+
   bool? loadOnSubscribe;
   EdgeInsets? padding;
 
   EndlessStreamScrollViewData({
-    required this.batchDelegate,
+    required this.extentAfterFactor,
     required this.loadMore,
     required this.stream,
     required this.headerBuilderState,
@@ -43,5 +47,6 @@ class EndlessStreamScrollViewData<T> {
   }) {
     padding ??= EdgeInsets.zero;
     loadOnSubscribe ??= false;
+    extentAfterFactor ??= 0.4;
   }
 }

@@ -20,6 +20,7 @@ class EndlessFirestoreStreamGridView<T> extends StatelessWidget {
   final Query<T> query;
   final SliverGridDelegate gridDelegate;
   final Future<void> Function(List<QueryDocumentSnapshot<T>> items)? onLoad;
+  final double? extentAfterFactor;
 
   final Widget Function(BuildContext context)? headerBuilder;
   final EndlessStateProperty<Widget>? headerBuilderState;
@@ -41,6 +42,7 @@ class EndlessFirestoreStreamGridView<T> extends StatelessWidget {
     required this.query,
     required this.batchDelegate,
     required this.gridDelegate,
+    this.extentAfterFactor,
     this.controller,
     this.padding,
     this.headerBuilder,
@@ -73,7 +75,7 @@ class EndlessFirestoreStreamGridView<T> extends StatelessWidget {
         }) {
           return EndlessStreamGridView.fromData<QueryDocumentSnapshot<T>>(
             EndlessStreamGridViewData<QueryDocumentSnapshot<T>>(
-              batchDelegate: batchDelegate.convertToStreamBatchDelegate(),
+              extentAfterFactor: extentAfterFactor,
               itemBuilder: itemBuilder,
               loadMore: loadMore,
               controller: controller,

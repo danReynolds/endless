@@ -8,7 +8,7 @@ import 'package:endless/stream/endless_stream_grid_view_data.dart';
 import 'package:flutter/material.dart';
 
 class EndlessPaginationGridView<T> extends StatelessWidget {
-  final Future<List<T>> Function({int pageSize, int pageIndex}) loadMore;
+  final Future<List<T>> Function(int pageIndex) loadMore;
   final Widget Function(
     BuildContext context, {
     T item,
@@ -20,6 +20,7 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
   final EdgeInsets? padding;
   final SliverGridDelegate gridDelegate;
   final EndlessPaginationDelegate paginationDelegate;
+  final double? extentAfterFactor;
 
   final Widget Function(BuildContext context)? headerBuilder;
   final EndlessStateProperty<Widget>? headerBuilderState;
@@ -41,6 +42,7 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
     required this.itemBuilder,
     required this.paginationDelegate,
     required this.gridDelegate,
+    this.extentAfterFactor,
     this.headerBuilder,
     this.headerBuilderState,
     this.emptyBuilder,
@@ -73,7 +75,7 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
         }) {
           return EndlessStreamGridView.fromData<T>(
             EndlessStreamGridViewData<T>(
-              batchDelegate: paginationDelegate.convertToStreamBatchDelegate(),
+              extentAfterFactor: extentAfterFactor,
               gridDelegate: gridDelegate,
               itemBuilder: itemBuilder,
               loadMore: loadMore,

@@ -9,7 +9,7 @@ class EndlessFirestoreStreamData<T> {
   final Query<T> query;
   final Widget Function({
     required Stream<List<QueryDocumentSnapshot<T>>> stream,
-    required void Function(int batchSize) loadMore,
+    required void Function() loadMore,
     required EndlessStreamController<QueryDocumentSnapshot<T>>? controller,
     required bool loadOnSubscribe,
   }) builder;
@@ -33,7 +33,7 @@ class EndlessFirestoreStreamBuilder<T> extends StatefulWidget {
   final Future<void> Function(List<QueryDocumentSnapshot<T>> docs)? onLoad;
   final Widget Function({
     required Stream<List<QueryDocumentSnapshot<T>>> stream,
-    required void Function(int batchSize) loadMore,
+    required void Function() loadMore,
     required EndlessStreamController<QueryDocumentSnapshot<T>> controller,
     required bool loadOnSubscribe,
   }) builder;
@@ -82,9 +82,7 @@ class _EndlessFirestoreStreamBuilderState<T>
     final controller = widget.controller;
 
     if (controller != null) {
-      controller.loadMore = () {
-        _loadMore(widget.batchDelegate.batchSize);
-      };
+      controller.loadMore = _loadMore;
 
       controller.clear = ({bool lazy = false}) async {
         if (_inputStream != null) {
@@ -108,7 +106,7 @@ class _EndlessFirestoreStreamBuilderState<T>
     }
   }
 
-  _loadMore(int batchSize) async {
+  _loadMore() async {
     if (_inputStream != null) {
       await _inputStream!.cancel();
     }
@@ -121,6 +119,7 @@ class _EndlessFirestoreStreamBuilderState<T>
     // the result count can be incremented/decremented for added or removed docs.
     int resultCount = 0;
 
+    final batchSize = widget.batchDelegate.batchSize;
     final currentLimit = batchSize * _currentBatch;
     final maxBatches = widget.batchDelegate.maxBatches;
     final hasMaxLimit = maxBatches != null;

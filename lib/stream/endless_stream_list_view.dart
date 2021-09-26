@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:endless/stream/endless_stream_batch_delegate.dart';
 import 'package:endless/stream/endless_stream_controller.dart';
 import 'package:endless/stream/endless_stream_list_view_data.dart';
 import 'package:endless/stream/endless_stream_scroll_view.dart';
@@ -7,38 +6,73 @@ import 'package:endless/stream/endless_stream_scroll_view_data.dart';
 import 'package:endless/endless_state_property.dart';
 import 'package:flutter/material.dart';
 
+/// An infinite loading list view that builds items added to the stream into a scrollable list.
 class EndlessStreamListView<T> extends StatelessWidget {
-  final void Function(int batchSize) loadMore;
+  /// A function which adds more items to the stream when the list view is scrolled
+  /// to its threshold for loading more items determined by the [extentAfterFactor].
+  final void Function() loadMore;
+
+  /// The stream of items that will be added to the list view.
   final Stream<List<T>> stream;
+
+  /// The builder function for the list view items.
   final Function(BuildContext context, {T item, int index, int totalItems})
       itemBuilder;
 
+  /// The builder function for the list view header.
   final Widget Function(BuildContext context)? headerBuilder;
+
+  /// The state property for the list view header.
   final EndlessStateProperty<Widget>? headerBuilderState;
 
+  /// The builder function for the list view empty state.
   final Widget Function(BuildContext context)? emptyBuilder;
+
+  /// The state property for the list view empty state.
   final EndlessStateProperty<Widget>? emptyBuilderState;
 
+  /// The builder function for the list view load more button.
   final Widget Function(BuildContext context)? loadMoreBuilder;
+
+  /// The state property for the list view load more button.
   final EndlessStateProperty<Widget>? loadMoreBuilderState;
 
+  /// The builder function for the list view footer.
   final Widget Function(BuildContext context)? footerBuilder;
+
+  /// The state property for the list view footer.
   final EndlessStateProperty<Widget>? footerBuilderState;
 
+  /// The builder function for the list view loading state.
   final Widget Function(BuildContext context)? loadingBuilder;
+
+  /// The state property for the list view loading state.
   final EndlessStateProperty<Widget>? loadingBuilderState;
 
+  /// The stream controller used to perform actions on the list view such as loading more data
+  /// or clearing the list.
   final EndlessStreamController<T>? controller;
+
+  /// Whether to immediately request data from the stream when it is first subscribed to by calling
+  /// the [EndlessStreamListView.loadMore] API.
   final bool? loadOnSubscribe;
+
+  /// The padding around the list view.
   final EdgeInsets? padding;
+
+  /// The padding in between each item in the list view.
   final EdgeInsets itemPadding;
-  final EndlessStreamBatchDelegate batchDelegate;
+
+  /// The fraction of the remaining quantity of content conceptually "below" the viewport in the scrollable
+  /// relative to the maximum height of the scrollable region at which point [loadMore] should be called to
+  /// load more data.
+  final double? extentAfterFactor;
 
   const EndlessStreamListView({
     required this.loadMore,
     required this.itemBuilder,
     required this.stream,
-    required this.batchDelegate,
+    this.extentAfterFactor,
     this.headerBuilder,
     this.headerBuilderState,
     this.emptyBuilder,
@@ -58,7 +92,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
 
   static EndlessStreamListView fromData<Y>(EndlessStreamListViewData<Y> data) {
     return EndlessStreamListView<Y>(
-      batchDelegate: data.batchDelegate,
+      extentAfterFactor: data.extentAfterFactor,
       loadMore: data.loadMore,
       itemBuilder: data.itemBuilder,
       stream: data.stream,
@@ -107,7 +141,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
         );
       },
       loadMoreScrollViewData: EndlessStreamScrollViewData<T>(
-        batchDelegate: batchDelegate,
+        extentAfterFactor: extentAfterFactor,
         loadMore: loadMore,
         headerBuilder: headerBuilder,
         emptyBuilder: emptyBuilder,

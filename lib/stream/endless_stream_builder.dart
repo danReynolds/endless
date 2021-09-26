@@ -4,7 +4,7 @@ import 'package:endless/stream/endless_stream_controller.dart';
 import 'package:flutter/material.dart';
 
 class EndlessStreamBuilder<T> extends StatefulWidget {
-  final void Function(int batchLimit) loadMore;
+  final void Function() loadMore;
   final Stream<List<T>> stream;
   final Widget Function({
     required List<T> items,
@@ -12,7 +12,6 @@ class EndlessStreamBuilder<T> extends StatefulWidget {
     required void Function() loadMore,
   }) builder;
   final EndlessStreamController<T>? controller;
-  final int batchLimit;
 
   /// Whether loadMore() should immediately be called upon subscribing to the stream.
   final bool loadOnSubscribe;
@@ -21,9 +20,8 @@ class EndlessStreamBuilder<T> extends StatefulWidget {
     required this.loadMore,
     required this.builder,
     required this.stream,
-    required this.batchLimit,
     this.controller,
-    this.loadOnSubscribe = false,
+    this.loadOnSubscribe = true,
     key,
   }) : super(key: key);
 
@@ -150,7 +148,7 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
       setState(() {
         _isLoading = true;
       });
-      widget.loadMore(widget.batchLimit);
+      widget.loadMore();
     }
   }
 

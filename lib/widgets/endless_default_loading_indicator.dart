@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DefaultEndlessLoadingIndicator extends StatelessWidget {
-  const DefaultEndlessLoadingIndicator({key}) : super(key: key);
+class EndlessDefaultLoadingIndicator extends StatelessWidget {
+  const EndlessDefaultLoadingIndicator({key}) : super(key: key);
 
   @override
   build(context) {

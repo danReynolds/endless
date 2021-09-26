@@ -1,41 +1,18 @@
 import 'package:endless/stream/endless_stream_builder.dart';
 import 'package:endless/stream/endless_stream_scroll_view_data.dart';
 import 'package:endless/endless_state_property.dart';
-import 'package:endless/widgets/default_endless_loading_indicator.dart';
+import 'package:endless/widgets/endless_default_loading_indicator.dart';
 import 'package:flutter/material.dart';
 
-class EndlessPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final Widget child;
-  final double maxHeight;
-  final double minHeight;
-
-  EndlessPersistentHeaderDelegate({
-    required this.child,
-    required this.maxHeight,
-    required this.minHeight,
-  });
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return child;
-  }
-
-  @override
-  double get maxExtent => maxHeight;
-
-  @override
-  double get minExtent => minHeight;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
-  }
-}
-
+/// Infinite loading scroll view using a CustomScrollView with the following customizable builders:
+/// - header builder
+/// - items builder
+/// - empty state builder
+/// - loading builder
+/// - load more builder
+/// - footer builder
+/// Implements a StateProperty builder pattern for customizing the different builders based on the current
+/// states of the infinite loading scroll view.
 class EndlessStreamScrollView<T> extends StatefulWidget {
   final EndlessStreamScrollViewData<T> loadMoreScrollViewData;
   final Widget Function(BuildContext context, List<T> items) scrollViewBuilder;
@@ -56,7 +33,7 @@ class _EndlessStreamScrollViewState<T>
   final ScrollController _scrollController = ScrollController();
 
   Widget _buildDefaultLoader(BuildContext context) {
-    return const DefaultEndlessLoadingIndicator();
+    return const EndlessDefaultLoadingIndicator();
   }
 
   Widget? _buildSliverBoxAdapter(Widget? child) {
@@ -76,7 +53,7 @@ class _EndlessStreamScrollViewState<T>
   }
 
   /// Builds the sliver sections for the custom scroll view using either their
-  /// specified builder functions, or state properties.
+  /// specified builder functions or state properties.
   List<Widget> _buildSlivers(Set<EndlessState> states, List<T> items) {
     final loadMoreScrollViewData = widget.loadMoreScrollViewData;
 
@@ -136,7 +113,6 @@ class _EndlessStreamScrollViewState<T>
           stream: loadMoreScrollViewData.stream,
           controller: loadMoreScrollViewData.controller,
           loadOnSubscribe: loadMoreScrollViewData.loadOnSubscribe!,
-          batchLimit: loadMoreScrollViewData.batchDelegate.batchSize,
           builder: ({
             required states,
             required items,
@@ -153,8 +129,7 @@ class _EndlessStreamScrollViewState<T>
                     !isEmpty &&
                     _scrollController.position.extentAfter <
                         constraints.maxHeight *
-                            loadMoreScrollViewData
-                                .batchDelegate.extentAfterFactor) {
+                            loadMoreScrollViewData.extentAfterFactor!) {
                   loadMore();
                 }
                 return false;
