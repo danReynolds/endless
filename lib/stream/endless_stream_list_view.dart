@@ -16,8 +16,12 @@ class EndlessStreamListView<T> extends StatelessWidget {
   final Stream<List<T>> stream;
 
   /// The builder function for the list view items.
-  final Function(BuildContext context, {T item, int index, int totalItems})
-      itemBuilder;
+  final Function(
+    BuildContext context, {
+    T item,
+    int index,
+    int totalItems,
+  }) itemBuilder;
 
   /// The builder function for the list view header.
   final Widget Function(BuildContext context)? headerBuilder;
@@ -31,10 +35,10 @@ class EndlessStreamListView<T> extends StatelessWidget {
   /// The state property for the list view empty state.
   final EndlessStateProperty<Widget>? emptyBuilderState;
 
-  /// The builder function for the list view load more button.
+  /// The builder function for the list view load more action widget.
   final Widget Function(BuildContext context)? loadMoreBuilder;
 
-  /// The state property for the list view load more button.
+  /// The state property for the list view load more action widget.
   final EndlessStateProperty<Widget>? loadMoreBuilderState;
 
   /// The builder function for the list view footer.
@@ -54,10 +58,10 @@ class EndlessStreamListView<T> extends StatelessWidget {
   final EndlessStreamController<T>? controller;
 
   /// Whether to immediately request data from the stream when it is first subscribed to by calling
-  /// the [EndlessStreamListView.loadMore] API.
+  /// the [loadMore] API.
   final bool? loadOnSubscribe;
 
-  /// The padding around the list view.
+  /// The padding around the scroll view.
   final EdgeInsets? padding;
 
   /// The padding in between each item in the list view.
@@ -72,7 +76,6 @@ class EndlessStreamListView<T> extends StatelessWidget {
     required this.loadMore,
     required this.itemBuilder,
     required this.stream,
-    this.extentAfterFactor,
     this.headerBuilder,
     this.headerBuilderState,
     this.emptyBuilder,
@@ -85,6 +88,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
     this.footerBuilderState,
     this.controller,
     this.padding,
+    this.extentAfterFactor = 0.4,
     this.loadOnSubscribe = true,
     this.itemPadding = EdgeInsets.zero,
     key,

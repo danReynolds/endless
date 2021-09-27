@@ -7,34 +7,71 @@ import 'package:endless/pagination/endless_pagination_stream_builder.dart';
 import 'package:endless/stream/endless_stream_grid_view_data.dart';
 import 'package:flutter/material.dart';
 
+/// An infinite loading grid view that builds items loaded from the [loadMore] API into a scrollable grid.
 class EndlessPaginationGridView<T> extends StatelessWidget {
+  /// A function which returns the additional items to add to the grid view when it is scrolled
+  /// to its threshold for loading more items determined by the [extentAfterFactor].
   final Future<List<T>> Function(int pageIndex) loadMore;
+
+  /// The builder function for the grid view items.
   final Widget Function(
     BuildContext context, {
     T item,
     int index,
     int totalItems,
   }) itemBuilder;
+
+  /// The stream controller used to perform actions on the grid view such as loading more data
+  /// or clearing the grid.
   final EndlessPaginationController<T>? controller;
+
+  /// Whether to immediately request data from the stream when it is first subscribed to by calling
+  /// the [loadMore] API.
   final bool? initialLoad;
+
+  /// The padding around the scroll view.
   final EdgeInsets? padding;
+
+  /// Controls the layout of tiles in a grid. See [GridView.gridDelegate].
   final SliverGridDelegate gridDelegate;
+
+  /// The delegate that specifies the pagination requirements for the grid view such as the maximum
+  /// number of pages to load and the page size.
   final EndlessPaginationDelegate paginationDelegate;
+
+  /// The fraction of the remaining quantity of content conceptually "below" the viewport in the scrollable
+  /// relative to the maximum height of the scrollable region at which point [loadMore] should be called to
+  /// load more data.
   final double? extentAfterFactor;
 
+  /// The builder function for the grid view header.
   final Widget Function(BuildContext context)? headerBuilder;
+
+  /// The state property for the grid view header.
   final EndlessStateProperty<Widget>? headerBuilderState;
 
+  /// The builder function for the grid view empty state.
   final Widget Function(BuildContext context)? emptyBuilder;
+
+  /// The state property for the grid view empty state.
   final EndlessStateProperty<Widget>? emptyBuilderState;
 
+  /// The builder function for the grid view load more action widget.
   final Widget Function(BuildContext context)? loadMoreBuilder;
+
+  /// The state property for the grid view load more action widget.
   final EndlessStateProperty<Widget>? loadMoreBuilderState;
 
+  /// The builder function for the grid view footer.
   final Widget Function(BuildContext context)? footerBuilder;
+
+  /// The state property for the grid view footer.
   final EndlessStateProperty<Widget>? footerBuilderState;
 
+  /// The builder function for the grid view loading state.
   final Widget Function(BuildContext context)? loadingBuilder;
+
+  /// The state property for the grid view loading state.
   final EndlessStateProperty<Widget>? loadingBuilderState;
 
   const EndlessPaginationGridView({
@@ -42,7 +79,6 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
     required this.itemBuilder,
     required this.paginationDelegate,
     required this.gridDelegate,
-    this.extentAfterFactor,
     this.headerBuilder,
     this.headerBuilderState,
     this.emptyBuilder,
@@ -55,7 +91,8 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
     this.footerBuilderState,
     this.controller,
     this.padding,
-    this.initialLoad,
+    this.initialLoad = true,
+    this.extentAfterFactor = 0.4,
     key,
   }) : super(key: key);
 

@@ -7,34 +7,71 @@ import 'package:endless/stream/endless_stream_grid_view.dart';
 import 'package:endless/stream/endless_stream_grid_view_data.dart';
 import 'package:flutter/material.dart';
 
+/// An infinite loading grid view that builds items loaded from the specified [Query] into a scrollable grid.
 class EndlessFirestoreStreamGridView<T> extends StatelessWidget {
+  /// The builder function for the grid view items.
   final Widget Function(
     BuildContext context, {
     QueryDocumentSnapshot<T> item,
     int index,
     int totalItems,
   }) itemBuilder;
+
+  /// The stream controller used to perform actions on the grid view such as loading more data
+  /// or clearing the grid.
   final EndlessFirestoreStreamController? controller;
+
+  /// The padding around the scroll view.
   final EdgeInsets? padding;
+
+  /// The delegate that specifies the Firestore stream requirements for the grid view such as the maximum
+  /// number of batches to load and the batch size.
   final EndlessFirestoreStreamBatchDelegate batchDelegate;
+
+  /// The Firestore query to execute to populate the items in the scroll view. A [Query.limit]
+  /// is applied to the query for each load based on the specified [EndlessFirestoreStreamBatchDelegate.batchSize].
   final Query<T> query;
+
+  /// Controls the layout of tiles in a grid. See [GridView.gridDelegate].
   final SliverGridDelegate gridDelegate;
+
+  /// A function called after loading more data from Firestore. This function must finish before any new items
+  /// are added to the list, allowing for any other data dependencies to be fetched before calling [itemBuilder].
   final Future<void> Function(List<QueryDocumentSnapshot<T>> items)? onLoad;
+
+  /// The fraction of the remaining quantity of content conceptually "below" the viewport in the scrollable
+  /// relative to the maximum height of the scrollable region at which point [loadMore] should be called to
+  /// load more data.
   final double? extentAfterFactor;
 
+  /// The builder function for the grid view header.
   final Widget Function(BuildContext context)? headerBuilder;
+
+  /// The state property for the grid view header.
   final EndlessStateProperty<Widget>? headerBuilderState;
 
+  /// The builder function for the grid view empty state.
   final Widget Function(BuildContext context)? emptyBuilder;
+
+  /// The state property for the grid view empty state.
   final EndlessStateProperty<Widget>? emptyBuilderState;
 
+  /// The builder function for the grid view load more action widget.
   final Widget Function(BuildContext context)? loadMoreBuilder;
+
+  /// The state property for the grid view load more action widget.
   final EndlessStateProperty<Widget>? loadMoreBuilderState;
 
+  /// The builder function for the grid view footer.
   final Widget Function(BuildContext context)? footerBuilder;
+
+  /// The state property for the grid view footer.
   final EndlessStateProperty<Widget>? footerBuilderState;
 
+  /// The builder function for the grid view loading state.
   final Widget Function(BuildContext context)? loadingBuilder;
+
+  /// The state property for the grid view loading state.
   final EndlessStateProperty<Widget>? loadingBuilderState;
 
   const EndlessFirestoreStreamGridView({

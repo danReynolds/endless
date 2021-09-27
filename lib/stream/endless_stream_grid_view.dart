@@ -6,31 +6,66 @@ import 'package:endless/stream/endless_stream_scroll_view_data.dart';
 import 'package:endless/endless_state_property.dart';
 import 'package:flutter/material.dart';
 
+/// An infinite loading grid view that builds items added to the stream into a scrollable grid.
 class EndlessStreamGridView<T> extends StatelessWidget {
+  /// A function which adds more items to the stream when the grid view is scrolled
+  /// to its threshold for loading more items determined by the [extentAfterFactor].
   final void Function() loadMore;
+
+  /// The stream of items that will be added to the grid view.
   final Stream<List<T>> stream;
+
+  /// The builder function for the grid view items.
   final Function(BuildContext context, {T item, int index, int totalItems})
       itemBuilder;
+
+  /// The stream controller used to perform actions on the grid view such as loading more data
+  /// or clearing the grid.
   final EndlessStreamController<T>? controller;
+
+  /// Whether to immediately request data from the stream when it is first subscribed to by calling
+  /// the [EndlessStreamGridView.loadMore] API.
   final bool? loadOnSubscribe;
+
+  /// Controls the layout of tiles in a grid. See [GridView.gridDelegate]
   final SliverGridDelegate gridDelegate;
+
+  /// The padding around the scroll view.
   final EdgeInsets? padding;
 
+  /// The builder function for the grid view header.
   final Widget Function(BuildContext context)? headerBuilder;
+
+  /// The state property for the grid view header.
   final EndlessStateProperty<Widget>? headerBuilderState;
 
+  /// The builder function for the grid view empty state.
   final Widget Function(BuildContext context)? emptyBuilder;
+
+  /// The state property for the grid view empty state.
   final EndlessStateProperty<Widget>? emptyBuilderState;
 
+  /// The builder function for the grid view load more action widget.
   final Widget Function(BuildContext context)? loadMoreBuilder;
+
+  /// The state property for the grid view load more action widget.
   final EndlessStateProperty<Widget>? loadMoreBuilderState;
 
+  /// The builder function for the grid view footer.
   final Widget Function(BuildContext context)? footerBuilder;
+
+  /// The state property for the grid view footer.
   final EndlessStateProperty<Widget>? footerBuilderState;
 
+  /// The builder function for the grid view loading state.
   final Widget Function(BuildContext context)? loadingBuilder;
+
+  /// The state property for the grid view loading state.
   final EndlessStateProperty<Widget>? loadingBuilderState;
 
+  /// The fraction of the remaining quantity of content conceptually "below" the viewport in the scrollable
+  /// relative to the maximum height of the scrollable region at which point [loadMore] should be called to
+  /// load more data.
   final double? extentAfterFactor;
 
   const EndlessStreamGridView({
@@ -38,7 +73,6 @@ class EndlessStreamGridView<T> extends StatelessWidget {
     required this.itemBuilder,
     required this.gridDelegate,
     required this.stream,
-    this.extentAfterFactor,
     this.headerBuilder,
     this.headerBuilderState,
     this.emptyBuilder,
@@ -50,6 +84,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
     this.footerBuilder,
     this.footerBuilderState,
     this.controller,
+    this.extentAfterFactor = 0.4,
     this.loadOnSubscribe = true,
     this.padding = const EdgeInsets.all(0),
     key,

@@ -7,41 +7,78 @@ import 'package:endless/stream/endless_stream_list_view.dart';
 import 'package:endless/stream/endless_stream_list_view_data.dart';
 import 'package:flutter/material.dart';
 
+/// An infinite loading list view that builds items loaded from the [loadMore] API into a scrollable list.
 class EndlessPaginationListView<T> extends StatelessWidget {
+  /// A function which returns the additional items to add to the list view when it is scrolled
+  /// to its threshold for loading more items determined by the [extentAfterFactor].
   final Future<List<T>> Function(int pageIndex) loadMore;
+
+  /// The builder function for the list view items.
   final Widget Function(
     BuildContext context, {
     T item,
     int index,
     int totalItems,
   }) itemBuilder;
+
+  /// The stream controller used to perform actions on the list view such as loading more data
+  /// or clearing the list.
   final EndlessPaginationController<T>? controller;
+
+  /// Whether to immediately request data from the stream when it is first subscribed to by calling
+  /// the [loadMore] API.
   final bool? initialLoad;
+
+  /// The padding around the scroll view.
   final EdgeInsets? padding;
+
+  /// The padding in between each item in the list view.
   final EdgeInsets? itemPadding;
+
+  /// The delegate that specifies the pagination requirements for the list view such as the maximum
+  /// number of pages to load and the page size.
   final EndlessPaginationDelegate paginationDelegate;
+
+  /// The fraction of the remaining quantity of content conceptually "below" the viewport in the scrollable
+  /// relative to the maximum height of the scrollable region at which point [loadMore] should be called to
+  /// load more data.
   final double? extentAfterFactor;
 
+  /// The builder function for the list view header.
   final Widget Function(BuildContext context)? headerBuilder;
+
+  /// The state property for the list view header.
   final EndlessStateProperty<Widget>? headerBuilderState;
 
+  /// The builder function for the list view empty state.
   final Widget Function(BuildContext context)? emptyBuilder;
+
+  /// The state property for the list view empty state.
   final EndlessStateProperty<Widget>? emptyBuilderState;
 
+  /// The builder function for the list view load more action widget.
   final Widget Function(BuildContext context)? loadMoreBuilder;
+
+  /// The state property for the list view load more action widget.
   final EndlessStateProperty<Widget>? loadMoreBuilderState;
 
+  /// The builder function for the list view footer.
   final Widget Function(BuildContext context)? footerBuilder;
+
+  /// The state property for the list view footer.
   final EndlessStateProperty<Widget>? footerBuilderState;
 
+  /// The builder function for the list view loading state.
   final Widget Function(BuildContext context)? loadingBuilder;
+
+  /// The state property for the list view loading state.
   final EndlessStateProperty<Widget>? loadingBuilderState;
 
   const EndlessPaginationListView({
     required this.loadMore,
     required this.itemBuilder,
     required this.paginationDelegate,
-    this.extentAfterFactor,
+    this.extentAfterFactor = 0.4,
     this.controller,
     this.padding,
     this.itemPadding,
@@ -55,7 +92,7 @@ class EndlessPaginationListView<T> extends StatelessWidget {
     this.loadMoreBuilderState,
     this.footerBuilder,
     this.footerBuilderState,
-    this.initialLoad,
+    this.initialLoad = true,
     key,
   }) : super(key: key);
 
