@@ -1,4 +1,4 @@
-/// The pagination controller used to perform actions on the scroll view such as load more data
+/// The pagination controller used to perform actions on the scroll view such as loading more data
 /// or clearing its existing items.
 class EndlessPaginationController<T> {
   /// Reloads the content of the scroll view, clearing its current data and calling [loadMore].

@@ -7,7 +7,11 @@ import 'package:endless/stream/endless_stream_grid_view.dart';
 import 'package:endless/stream/endless_stream_grid_view_data.dart';
 import 'package:flutter/material.dart';
 
-/// An infinite loading grid view that builds items loaded from the specified [Query] into a scrollable grid.
+/// An infinite loading grid view that displays documents loaded from the specified [Query] into a scrollable grid. Subscribes to the documents
+/// return from the query with the [Query.snapshots] using the [Query.limit] approach described [here](https://youtu.be/poqTHxtDXwU?t=470). Note that this
+/// incurs a re-read of ***all** current documents when loading successive batches so be aware of the read pricing concerns there.
+///
+/// If live data updates are not required, consider using [EndlessPaginationGridView] instead by executing your query in the [EndlessPaginationGridView.loadMore] API.
 class EndlessFirestoreStreamGridView<T> extends StatelessWidget {
   /// The builder function for the grid view items.
   final Widget Function(

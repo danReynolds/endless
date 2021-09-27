@@ -1,4 +1,4 @@
-/// The stream controller used to perform actions on the stream such as load more data
+/// The stream controller used to perform actions on the stream such as loading more data
 /// or clearing its existing items.
 class EndlessStreamController<T> {
   /// Removes the given item from the stream's list of items

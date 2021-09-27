@@ -5,7 +5,7 @@ class EndlessPaginationDelegate {
   /// will support endless scrolling until fewer than [pageSize] items are returned.
   final int? maxPages;
 
-  /// The size of expected items to be returned per page. Used to determine if the scroll view
+  /// The number of expected items to be returned per page. Used to determine if the scroll view
   /// should stop loading data when fewer than [pageSize] items are returned by the [loadMore] API.
   final int pageSize;
 
