@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:endless/stream/endless_stream_grid_view.dart';
-import 'package:endless/stream/endless_stream_list_view.dart';
 import 'package:flutter/material.dart';
 
 class ExampleItem {
