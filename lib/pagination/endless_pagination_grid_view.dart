@@ -16,9 +16,9 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
   /// The builder function for the grid view items.
   final Widget Function(
     BuildContext context, {
-    T item,
-    int index,
-    int totalItems,
+    required T item,
+    required int index,
+    required int totalItems,
   }) itemBuilder;
 
   /// The stream controller used to perform actions on the grid view such as loading more data

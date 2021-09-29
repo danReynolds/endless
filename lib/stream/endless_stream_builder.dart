@@ -125,14 +125,13 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
             ...items,
           ];
         }
-
         _isLoading = false;
       });
     })
       ..onDone(_disableLoading);
 
     if (widget.loadOnSubscribe) {
-      _loadMore();
+      widget.loadMore();
     }
   }
 
@@ -144,7 +143,7 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
   }
 
   _loadMore() async {
-    if (_canLoadMore) {
+    if (_canLoadMore && !_isLoading) {
       setState(() {
         _isLoading = true;
       });

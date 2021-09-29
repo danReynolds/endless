@@ -1,6 +1,6 @@
 name: endless
 description: A new Flutter package project.
-version: 0.0.4
+version: 0.0.5
 homepage:
 
 environment:
@@ -10,12 +10,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cloud_firestore: ^2.5.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  golden_toolkit: ^0.10.0
   flutter_lints: ^1.0.0
+  cloud_firestore: ^2.5.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

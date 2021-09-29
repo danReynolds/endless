@@ -16,8 +16,12 @@ class EndlessStreamGridView<T> extends StatelessWidget {
   final Stream<List<T>> stream;
 
   /// The builder function for the grid view items.
-  final Function(BuildContext context, {T item, int index, int totalItems})
-      itemBuilder;
+  final Function(
+    BuildContext context, {
+    required T item,
+    required int index,
+    required int totalItems,
+  }) itemBuilder;
 
   /// The stream controller used to perform actions on the grid view such as loading more data
   /// or clearing the grid.

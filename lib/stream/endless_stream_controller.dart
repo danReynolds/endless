@@ -1,10 +1,10 @@
 /// The stream controller used to perform actions on the stream such as loading more data
 /// or clearing its existing items.
 class EndlessStreamController<T> {
-  /// Removes the given item from the stream's list of items
+  /// Removes the given item from the stream's list of items.
   late void Function(T item) remove;
 
-  /// Loads more data into the stream's list of items
+  /// Requests for the next batch of data to be emitted on the stream.
   late void Function() loadMore;
 
   /// Pauses loading any more data into the stream's list of items, making loadMore() a no-op.

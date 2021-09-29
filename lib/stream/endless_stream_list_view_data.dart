@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 class EndlessStreamListViewData<T> extends EndlessStreamScrollViewData<T> {
   final Widget Function(
     BuildContext context, {
-    T item,
-    int index,
-    int totalItems,
+    required T item,
+    required int index,
+    required int totalItems,
   }) itemBuilder;
   final EdgeInsets? itemPadding;
 

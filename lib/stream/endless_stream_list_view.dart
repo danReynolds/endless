@@ -18,9 +18,9 @@ class EndlessStreamListView<T> extends StatelessWidget {
   /// The builder function for the list view items.
   final Function(
     BuildContext context, {
-    T item,
-    int index,
-    int totalItems,
+    required T item,
+    required int index,
+    required int totalItems,
   }) itemBuilder;
 
   /// The builder function for the list view header.

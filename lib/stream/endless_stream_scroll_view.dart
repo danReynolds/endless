@@ -77,7 +77,7 @@ class _EndlessStreamScrollViewState<T>
           loadMoreScrollViewData.footerBuilder,
         );
 
-    return [
+    final slivers = [
       _buildSliverBoxAdapter(headerBuilderState.resolve(context, states)),
       states.contains(EndlessState.empty)
           ? _buildSliverBoxAdapter(
@@ -99,7 +99,9 @@ class _EndlessStreamScrollViewState<T>
       _buildSliverBoxAdapter(
         footerBuilderState.resolve(context, states),
       ),
-    ].where((sliver) => sliver != null).toList() as List<Widget>;
+    ].where((sliver) => sliver != null).toList();
+
+    return List<Widget>.from(slivers);
   }
 
   @override
@@ -127,6 +129,7 @@ class _EndlessStreamScrollViewState<T>
                 if (!isLoading &&
                     canLoadMore &&
                     !isEmpty &&
+                    notification is ScrollUpdateNotification &&
                     _scrollController.position.extentAfter <
                         constraints.maxHeight *
                             loadMoreScrollViewData.extentAfterFactor!) {
