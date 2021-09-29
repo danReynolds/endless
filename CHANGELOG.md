@@ -1,3 +1,7 @@
+## 1.1.2
+
+* More Documentation updates
+
 ## 1.1.1
 
 * Update README
