@@ -1,3 +1,7 @@
+## 1.0.2
+
+* Bugfix: Error in README
+
 ## 1.0.1
 
 * Bugfix: Formatting in pubspec

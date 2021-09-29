@@ -289,7 +289,7 @@ class MyApp extends StatelessWidget {
 ```
 
 An infinite loading list view that displays documents loaded from the specified [Query] into a scrollable list. The scroll view subscribes to the documents
-returned from the query with the [Query.snapshots] API using the [Query.limit] approach described [in this video](https://youtu.be/poqTHxtDXwU?t=470). Note that this approach incurs a re-read of ***all** current documents when loading successive batches so be aware of the read pricing concerns there. This trade-off was made because of the advantages that come from limit-based batching as best described in the link above. 
+returned from the query with the [Query.snapshots] API using the [Query.limit] approach described [in this video](https://youtu.be/poqTHxtDXwU?t=470). Note that this approach incurs a re-read of **all** current documents when loading successive batches so be aware of the read pricing concerns there. This trade-off was made because of the advantages that come from limit-based batching as best described in the link above. 
 
 All other APIs for Firestore streams are the same as in the first examples with pagination, so check out a grid view and advanced example under the [pagination](#pagination) section.
 
