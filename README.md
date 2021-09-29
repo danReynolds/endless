@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(title: Text('Endless pagination list view')),
         body: EndlessPaginationListView<String>(
           // An async function that returns a list of items to be added to the scroll view. When you scroll past the configurable
-          // `extentAfterFactor` it calls `loadMore` to get more items.
+          // `extentAfterFactor`, it calls `loadMore` to get more items.
           loadMore: (pageIndex) async => {...},
           // The pagination configuration for the scroll view determines when to stop fetching items.
           // The scroll view will stop fetching more data for either of these reasons:
@@ -257,8 +257,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: Text('Endless stream list view')),
         body: EndlessStreamListView<String>(
-          // An async function that returns a list of items to be added to the scroll view. When you scroll past the configurable
-          // `extentAfterFactor` it calls `loadMore` to get more items.
+          // A function called when you scroll past the configurable `extentAfterFactor` to tell the stream to add more items.
           loadMore: () => {...},
           // Items emitted on the stream are added to the scroll view. The scroll view knows to not try and fetch any more items
           // once the stream has completed.
@@ -292,6 +291,6 @@ Run the [example](https://github.com/danReynolds/endless/tree/master/example/exa
 
 ## Feedback & Extensions
 
-It's pretty straightforward to add support for other scroll view loading patterns (besides pagination and streaming) or 3rd party extensions `endless_firestore` so make an issue if you have a new use case you're interested in seeing added.
+It's pretty straightforward to add support for other scroll view loading patterns (in addition pagination and streaming) or 3rd party extensions `endless_firestore` so make an issue if you have a new use case you're interested in seeing added.
 
 Happy coding!
