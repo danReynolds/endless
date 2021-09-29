@@ -295,10 +295,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: Text('Endless Firestore stream list view')),
         body: EndlessFirestoreStreamListView<String>(
-          // An async function that returns a list of items to be added to the scroll view. When you scroll past the configurable
-          // `extentAfterFactor` it calls `loadMore` to get more items.
-          loadMore: () => {...},
-          // A Firestore stream takes a query to use for fetching items.
+          // A Firestore Query used for fetching items.
           query: FirebaseFirestore.instance.collection('users').where('name', isEqualTo: 'Tester'),
           // The batch delegate determines how many new items to fetch per batch and optionally the maximum number of batches to fetch.
           batchDelegate: EndlessFirestoreStreamBatchDelegate(
