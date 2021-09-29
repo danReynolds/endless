@@ -293,11 +293,11 @@ returned from the query with the [Query.snapshots] API using the [Query.limit] a
 
 All other APIs for Firestore streams are the same as in the first examples with pagination, so check out a grid view and advanced example under the [pagination](#pagination) section.
 
-# Working Example
+## Working Example
 
 Run the [example](https://github.com/danReynolds/endless/tree/master/example/example) to give it a try and play around with the config options.
 
-# Feedback & Extensions
+## Feedback & Extensions
 
 It's pretty straightforward to add support for other scroll view loading patterns (besides pagination and streaming) or data sources (other libs like Firestore) so make an issue if your use case isn't easily achievable with anything you see here.
 
