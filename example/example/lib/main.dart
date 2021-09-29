@@ -1,12 +1,33 @@
-import 'dart:async';
-
-import 'package:endless/stream/endless_stream_grid_view.dart';
+import 'package:endless/pagination.dart';
 import 'package:flutter/material.dart';
 
 class ExampleItem {
   final String title;
 
-  ExampleItem({required this.title});
+  ExampleItem({
+    required this.title,
+  });
+}
+
+class ExampleItemPager {
+  int pageIndex = 0;
+  final int pageSize;
+
+  ExampleItemPager({
+    this.pageSize = 5,
+  });
+
+  List<ExampleItem> nextBatch() {
+    List<ExampleItem> batch = [];
+
+    for (int i = 0; i < pageSize; i++) {
+      batch.add(ExampleItem(title: 'Item ${pageIndex * pageSize + i}'));
+    }
+
+    pageIndex += 1;
+
+    return batch;
+  }
 }
 
 void main() {
@@ -37,44 +58,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final StreamController<List<ExampleItem>> _streamController =
-      StreamController();
+  final pager = ExampleItemPager();
+  final controller = EndlessPaginationController<ExampleItem>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        height: 150,
-        child: EndlessStreamGridView<ExampleItem>(
-          loadMore: () {
-            _streamController.add([
-              ExampleItem(title: 'Item 1'),
-              ExampleItem(title: 'Item 2'),
-              ExampleItem(title: 'Item 2'),
-              ExampleItem(title: 'Item 2'),
-              ExampleItem(title: 'Item 2'),
-              ExampleItem(title: 'Item 2'),
-            ]);
-          },
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
-          stream: _streamController.stream,
-          itemBuilder: (
-            context, {
-            required item,
-            required index,
-            required totalItems,
-          }) {
-            return Container(
-              height: 50,
-              color: Colors.purple,
-              child: Text(item.title,
-                  style: TextStyle(
-                      color: index == 0 ? Colors.red : Colors.yellow,
-                      fontSize: 23)),
-            );
-          },
+      body: EndlessPaginationListView<ExampleItem>(
+        loadMore: (pageIndex) async => pager.nextBatch(),
+        paginationDelegate: EndlessPaginationDelegate(
+          pageSize: 5,
+        ),
+        controller: controller,
+        itemBuilder: (
+          context, {
+          required item,
+          required index,
+          required totalItems,
+        }) {
+          return Container(
+            color: Colors.purple,
+            child: Text(item.title),
+          );
+        },
+        loadMoreBuilder: (context) => TextButton(
+          child: const Text('load more'),
+          onPressed: () => controller.loadMore(),
         ),
       ),
     );

@@ -8,7 +8,7 @@ import 'package:endless/stream/endless_stream_list_view_data.dart';
 import 'package:flutter/material.dart';
 
 /// An infinite loading list view that displays documents loaded from the specified [Query] into a scrollable list. Subscribes to the documents
-/// return from the query with the [Query.snapshots] using the [Query.limit] approach described [here](https://youtu.be/poqTHxtDXwU?t=470). Note that this
+/// returned from the query with the [Query.snapshots] API using the [Query.limit] approach described [here](https://youtu.be/poqTHxtDXwU?t=470). Note that this
 /// incurs a re-read of ***all** current documents when loading successive batches so be aware of the read pricing concerns there.
 ///
 /// If live data updates are not required, consider using [EndlessPaginationListView] instead by executing your query in the [EndlessPaginationListView.loadMore] API.
