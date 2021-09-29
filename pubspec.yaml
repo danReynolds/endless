@@ -1,6 +1,6 @@
 name: endless
 description: An infinite scroll view library with out of the box widgets for loading using pagination and streams.
-version: 1.1.0
+version: 1.1.1
 homepage: https://github.com/danReynolds/endless
 
 environment:

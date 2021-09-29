@@ -1,6 +1,6 @@
 # Endless
 
-An infinite scroll view library with out of the box widgets for loading using [pagination](#pagination), [streams](#streams) and [Firestore streams](#firestore). Built on top of [CustomScrollView](https://api.flutter.dev/flutter/widgets/CustomScrollView-class.html).
+An infinite scroll view library with out of the box widgets for loading using [pagination](#pagination), [streams](#streams) and [Firestore streams](https://pub.dev/packages/endless_firestore). Built on top of [CustomScrollView](https://api.flutter.dev/flutter/widgets/CustomScrollView-class.html).
 
 # Pagination
 
@@ -279,49 +279,11 @@ class MyApp extends StatelessWidget {
 
 All other APIs for streams are the same as in the first examples with pagination, so check out a grid view and advanced example under the [pagination](#pagination) section.
 
-# Firestore
+# 3rd Party Extensions
 
-## Basic Example
+## Firestore
 
-```dart
-import 'package:flutter/material.dart';
-import 'package:endless/firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Endless Firestore stream list view')),
-        body: EndlessFirestoreStreamListView<String>(
-          // A Firestore Query used for fetching items.
-          query: FirebaseFirestore.instance.collection('users').where('name', isEqualTo: 'Tester'),
-          // The batch delegate determines how many new items to fetch per batch and optionally the maximum number of batches to fetch.
-          batchDelegate: EndlessFirestoreStreamBatchDelegate(
-            batchSize: 5,
-            maxBatches: 10,
-          ),
-          itemBuilder: (
-            context, {
-            required item,
-            required index,
-            required totalItems,
-          }) {
-            return Text(item);
-          },
-        ),
-      ),
-    );
-  }
-}
-```
-
-An infinite loading list view that displays documents loaded from the specified [Query](https://pub.dev/documentation/cloud_firestore/latest/cloud_firestore/Query-class.html) into a scrollable list. The scroll view subscribes to the documents returned from the query with the [Query.snapshots](https://pub.dev/documentation/cloud_firestore/latest/cloud_firestore/Query/snapshots.html) API using the [Query.limit](https://pub.dev/documentation/cloud_firestore/latest/cloud_firestore/Query/limit.html) approach described [in this video](https://youtu.be/poqTHxtDXwU?t=470).
-
-> Note that this approach incurs a re-read of **all** current documents when loading successive batches so be aware of the read pricing concerns there. This trade-off was made because of the advantages that come from limit-based batching as best described in the link above. 
-
-All other APIs for Firestore streams are the same as in the first examples with pagination, so check out a grid view and advanced example under the [pagination](#pagination) section.
+The Endless Firestore extension is available as a [separate package](https://pub.dev/packages/endless_firestore).
 
 ## Working Example
 
@@ -329,6 +291,6 @@ Run the [example](https://github.com/danReynolds/endless/tree/master/example/exa
 
 ## Feedback & Extensions
 
-It's pretty straightforward to add support for other scroll view loading patterns (besides pagination and streaming) or data sources (other libs like Firestore) so make an issue if your use case isn't easily achievable with anything you see here.
+It's pretty straightforward to add support for other scroll view loading patterns (besides pagination and streaming) or 3rd party extensions `endless_firestore` so make an issue if you have a new use case you're interested in seeing added.
 
 Happy coding!

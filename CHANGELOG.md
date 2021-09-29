@@ -1,3 +1,7 @@
+## 1.1.1
+
+* Update README
+
 ## 1.1.0
 
 * Move firestore streams to a separate companion library to remove the direct dependency on `cloud_firestore`.
