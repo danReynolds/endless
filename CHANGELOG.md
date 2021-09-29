@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Add more detail to the README
+
 ## 1.0.2
 
 * Bugfix: Error in README

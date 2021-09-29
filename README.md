@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
 
 `Endless` scroll views support a set of optional builder functions to build complex infinite scrolling lists with the following top-to-bottom UI:
 
-```
+```text
 Header -> headerBuilder
 Items -> itemBuilder
 Empty state -> emptyBuilder
@@ -207,6 +207,38 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+The full list of state property helpers consists of the following:
+
+* `EndlessStateProperty.all`
+* `EndlessStateProperty.loading`
+* `EndlessStateProperty.empty`
+* `EndlessStateProperty.done`
+* `EndlessStateProperty.never`
+* `EndlessStateProperty.resolveWith`
+
+
+Some builder functions have default state property behaviors. The `emptyBuilder` parameter for example, is automatically wrapped in an `emptyStateBuilder` defined to only be built if the scroll view is empty and not loading as shown below:
+
+```dart
+EndlessStateProperty<Widget?> resolveEmptyBuilderToStateProperty(
+  Builder<Widget>? builder,
+) {
+  return _resolveBuilderToStateProperty<Widget>(
+    builder,
+    (Builder<Widget> builder) =>
+        EndlessStateProperty.resolveWith<Widget>((context, states) {
+      if (states.contains(EndlessState.empty) &&
+          !states.contains(EndlessState.loading)) {
+        return builder(context);
+      }
+      return null;
+    }),
+  );
+}
+```
+
+If that's not the default you would like for your empty state, no problem! You can always provide your own `emptyBuilderState` to override it.
+
 # Streams
 
 ## Basic Example
@@ -288,8 +320,9 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-An infinite loading list view that displays documents loaded from the specified [Query] into a scrollable list. The scroll view subscribes to the documents
-returned from the query with the [Query.snapshots] API using the [Query.limit] approach described [in this video](https://youtu.be/poqTHxtDXwU?t=470). Note that this approach incurs a re-read of **all** current documents when loading successive batches so be aware of the read pricing concerns there. This trade-off was made because of the advantages that come from limit-based batching as best described in the link above. 
+An infinite loading list view that displays documents loaded from the specified [Query](https://pub.dev/documentation/cloud_firestore/latest/cloud_firestore/Query-class.html) into a scrollable list. The scroll view subscribes to the documents returned from the query with the [Query.snapshots](https://pub.dev/documentation/cloud_firestore/latest/cloud_firestore/Query/snapshots.html) API using the [Query.limit](https://pub.dev/documentation/cloud_firestore/latest/cloud_firestore/Query/limit.html) approach described [in this video](https://youtu.be/poqTHxtDXwU?t=470).
+
+> Note that this approach incurs a re-read of **all** current documents when loading successive batches so be aware of the read pricing concerns there. This trade-off was made because of the advantages that come from limit-based batching as best described in the link above. 
 
 All other APIs for Firestore streams are the same as in the first examples with pagination, so check out a grid view and advanced example under the [pagination](#pagination) section.
 
