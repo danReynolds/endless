@@ -1,6 +1,6 @@
 name: endless
-description: An infinite scroll view library with out of the box widgets for loading using pagination, streams and Firestore streams.
-version: 1.0.3
+description: An infinite scroll view library with out of the box widgets for loading using pagination and streams.
+version: 1.1.0
 homepage: https://github.com/danReynolds/endless
 
 environment:
@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cloud_firestore: ^2.5.3
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'package:endless/stream/endless_stream_builder.dart';
 import 'package:endless/stream/endless_stream_scroll_view_data.dart';
 import 'package:endless/endless_state_property.dart';
+import 'package:endless/utils/sliver_detector.dart';
 import 'package:endless/widgets/endless_default_loading_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -38,10 +39,7 @@ class _EndlessStreamScrollViewState<T>
 
   Widget? _buildSliverBoxAdapter(Widget? child) {
     if (child != null) {
-      // Hack: As a convenience for clients, we automatically wrap Box layout builders in a SliverToBoxAdapter
-      // for the CustomScrollView. The easiest way to do that currently is to check if the runtime type starts with Sliver.
-      // This isn't foolproof so if you're reading this and know of a better way please let us know :)
-      if (child.runtimeType.toString().startsWith("Sliver")) {
+      if (isSliver(child)) {
         return child;
       }
       return SliverToBoxAdapter(

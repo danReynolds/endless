@@ -1,4 +1,4 @@
-import 'package:endless/pagination.dart';
+import 'package:endless/endless.dart';
 import 'package:flutter/material.dart';
 
 class ExampleItem {
