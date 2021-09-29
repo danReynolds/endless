@@ -20,9 +20,10 @@ class MyApp extends StatelessWidget {
           // An async function that returns a list of items to be added to the scroll view. When you scroll past the configurable
           // `extentAfterFactor` it calls `loadMore` to get more items.
           loadMore: (pageIndex) async => {...},
-          // The pagination configuration for the scroll view determines when to stop fetching items. The scroll view knows to for either of these reasons:
+          // The pagination configuration for the scroll view determines when to stop fetching items.
+          // The scroll view will stop fetching more data for either of these reasons:
           // 1. The number of items returned from loadMore is smaller than the given `pageSize`.
-          // 2. It has reached the optional `maxPages` max number of specified pages.
+          // 2. It has fetched the optional `maxPages` max number of specified pages.
           paginationDelegate: EndlessPaginationDelegate(
             pageSize: 5,
             maxPages: 10,
