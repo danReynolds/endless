@@ -8,7 +8,7 @@ An infinite scroll view library with out of the box widgets for loading using [p
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:endless/pagination.dart';
+import 'package:endless/endless.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:endless/pagination.dart';
+import 'package:endless/endless.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -96,7 +96,7 @@ Footer -> footerBuilder
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:endless/pagination.dart';
+import 'package:endless/endless.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -168,7 +168,7 @@ We can then check the current states of the scroll view to customize our header:
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:endless/pagination.dart';
+import 'package:endless/endless.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -246,7 +246,7 @@ If that's not the default you would like for your empty state, no problem! You c
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:endless/stream.dart';
+import 'package:endless/endless.dart';
 
 final streamController = StreamController<List<String>>();
 
