@@ -14,11 +14,11 @@ class EndlessStreamScrollViewData<T> {
   final EndlessStateProperty? loadingBuilderState;
   final EndlessStateProperty? loadMoreBuilderState;
   final EndlessStateProperty? footerBuilderState;
-  final Widget Function()? headerBuilder;
-  final Widget Function()? emptyBuilder;
-  final Widget Function()? loadingBuilder;
-  final Widget Function()? loadMoreBuilder;
-  final Widget Function()? footerBuilder;
+  final Widget Function(BuildContext context)? headerBuilder;
+  final Widget Function(BuildContext context)? emptyBuilder;
+  final Widget Function(BuildContext context)? loadingBuilder;
+  final Widget Function(BuildContext context)? loadMoreBuilder;
+  final Widget Function(BuildContext context)? footerBuilder;
 
   // Default to fetching the next batch once the scroll view has less than 40%
   // of the available space left to scroll

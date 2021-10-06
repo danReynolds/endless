@@ -113,19 +113,19 @@ void main() {
                 crossAxisCount: 2,
                 childAspectRatio: 2,
               ),
-              headerBuilder: () {
+              headerBuilder: (context) {
                 return Container(
                   color: Colors.blue,
                   child: const Text('Header'),
                 );
               },
-              footerBuilder: () {
+              footerBuilder: (context) {
                 return Container(
                   color: Colors.red,
                   child: const Text('Footer'),
                 );
               },
-              loadMoreBuilder: () {
+              loadMoreBuilder: (context) {
                 return TextButton(
                   child: const Text('load more'),
                   onPressed: () {},
@@ -176,19 +176,19 @@ void main() {
                 crossAxisCount: 2,
                 childAspectRatio: 2,
               ),
-              headerBuilder: () {
+              headerBuilder: (context) {
                 return Container(
                   color: Colors.blue,
                   child: const Text('Header'),
                 );
               },
-              footerBuilder: () {
+              footerBuilder: (context) {
                 return Container(
                   color: Colors.red,
                   child: const Text('Footer'),
                 );
               },
-              loadMoreBuilder: () {
+              loadMoreBuilder: (context) {
                 return TextButton(
                   child: const Text('load more'),
                   onPressed: () {},

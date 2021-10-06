@@ -24,31 +24,31 @@ class EndlessStreamListView<T> extends StatelessWidget {
   }) itemBuilder;
 
   /// The builder function for the list view header.
-  final Widget Function()? headerBuilder;
+  final Widget Function(BuildContext context)? headerBuilder;
 
   /// The state property for the list view header.
   final EndlessStateProperty? headerBuilderState;
 
   /// The builder function for the list view empty state.
-  final Widget Function()? emptyBuilder;
+  final Widget Function(BuildContext context)? emptyBuilder;
 
   /// The state property for the list view empty state.
   final EndlessStateProperty? emptyBuilderState;
 
   /// The builder function for the list view load more action widget.
-  final Widget Function()? loadMoreBuilder;
+  final Widget Function(BuildContext context)? loadMoreBuilder;
 
   /// The state property for the list view load more action widget.
   final EndlessStateProperty? loadMoreBuilderState;
 
   /// The builder function for the list view footer.
-  final Widget Function()? footerBuilder;
+  final Widget Function(BuildContext context)? footerBuilder;
 
   /// The state property for the list view footer.
   final EndlessStateProperty? footerBuilderState;
 
   /// The builder function for the list view loading state.
-  final Widget Function()? loadingBuilder;
+  final Widget Function(BuildContext context)? loadingBuilder;
 
   /// The state property for the list view loading state.
   final EndlessStateProperty? loadingBuilderState;
