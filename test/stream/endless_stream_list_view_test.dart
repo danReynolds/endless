@@ -130,19 +130,19 @@ void main() {
           EndlessStreamListView<MockItem>(
             loadMore: bloc.load,
             stream: bloc.stream,
-            headerBuilder: () {
+            headerBuilder: (context) {
               return Container(
                 color: Colors.blue,
                 child: const Text('Header'),
               );
             },
-            footerBuilder: () {
+            footerBuilder: (context) {
               return Container(
                 color: Colors.red,
                 child: const Text('Footer'),
               );
             },
-            loadMoreBuilder: () {
+            loadMoreBuilder: (context) {
               return TextButton(
                 child: const Text('load more'),
                 onPressed: () {},

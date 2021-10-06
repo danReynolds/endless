@@ -33,7 +33,7 @@ class _EndlessStreamScrollViewState<T>
     extends State<EndlessStreamScrollView<T>> {
   final ScrollController _scrollController = ScrollController();
 
-  Widget _buildDefaultLoader() {
+  Widget _buildDefaultLoader(BuildContext context) {
     return const EndlessDefaultLoadingIndicator();
   }
 
@@ -76,25 +76,26 @@ class _EndlessStreamScrollViewState<T>
         );
 
     final slivers = [
-      _buildSliverBoxAdapter(headerBuilderState.resolve(states)),
+      _buildSliverBoxAdapter(headerBuilderState.resolve(context, states)),
       states.contains(EndlessState.empty)
           ? _buildSliverBoxAdapter(
-              emptyBuilderState.resolve(states),
+              emptyBuilderState.resolve(context, states),
             )
           : SliverPadding(
               padding: loadMoreScrollViewData.padding!,
               sliver: widget.scrollViewBuilder(items),
             ),
       _buildSliverBoxAdapter(
-        loadingBuilderState.resolve(states),
+        loadingBuilderState.resolve(context, states),
       ),
       _buildSliverBoxAdapter(
         loadMoreBuilderState.resolve(
+          context,
           states,
         ),
       ),
       _buildSliverBoxAdapter(
-        footerBuilderState.resolve(states),
+        footerBuilderState.resolve(context, states),
       ),
     ].where((sliver) => sliver != null).toList();
 

@@ -2,51 +2,70 @@
 
 import 'package:flutter/material.dart';
 import 'package:state_property/state_property.dart';
+import 'package:state_property/widget_state_property.dart';
 
 enum EndlessState { empty, loading, done }
 
-typedef StatelessBuilder = Widget Function();
-typedef StatefulBuilder = Widget? Function(
-  Set<EndlessState> states,
-);
+class EndlessStateProperty extends WidgetStateProperty<EndlessState> {
+  EndlessStateProperty(resolve) : super(resolve);
 
-abstract class EndlessStateProperty
-    implements StateProperty<EndlessState, Widget> {
-  /// The most flexible [StateProperty] that allows for dynamically resolving the builder
-  /// function based on the state of the endless scroll view.
-  static StateProperty<EndlessState, Widget> resolveWith(
-          StatefulBuilder builder) =>
-      StateProperty.resolveWith<EndlessState, Widget>(builder);
+  /// The most flexible state property that allows for dynamically resolving the builder
+  /// function based on the state of the scroll view.
+  static EndlessStateProperty resolveWith(StatefulWidgetResolver builder) =>
+      EndlessStateProperty(
+        (BuildContext context) =>
+            StateProperty.resolveWith<EndlessState, Widget>(
+                (states) => builder(context, states)),
+      );
 
   /// Resolves the given builder in all cases regardless of the state of the scroll view.
-  static StateProperty<EndlessState, Widget> all(StatelessBuilder builder) =>
-      StateProperty.all<EndlessState, Widget>(builder);
+  static EndlessStateProperty all(StatelessWidgetResolver builder) =>
+      EndlessStateProperty(
+        (BuildContext context) =>
+            StateProperty.all<EndlessState, Widget>(() => builder(context)),
+      );
 
   /// Resolves the given builder if the scroll view is currently in the loading state.
-  static StateProperty<EndlessState, Widget> loading(
-          StatelessBuilder builder) =>
-      StateProperty.resolveState(builder, EndlessState.loading);
+  static EndlessStateProperty loading(StatelessWidgetResolver builder) =>
+      EndlessStateProperty(
+        (BuildContext context) =>
+            StateProperty.resolveState<EndlessState, Widget>(
+          () => builder(context),
+          EndlessState.loading,
+        ),
+      );
 
   /// Resolves the given builder if the scroll view is currently in the empty state.
-  static StateProperty<EndlessState, Widget> empty(StatelessBuilder builder) =>
-      StateProperty.resolveState(builder, EndlessState.empty);
+  static EndlessStateProperty empty(StatelessWidgetResolver builder) =>
+      EndlessStateProperty(
+        (BuildContext context) =>
+            StateProperty.resolveState<EndlessState, Widget>(
+          () => builder(context),
+          EndlessState.empty,
+        ),
+      );
 
   /// Resolves the given builder if the scroll view is currently in the done state.
-  static StateProperty<EndlessState, Widget> done<T>(
-          StatelessBuilder builder) =>
-      StateProperty.resolveState(builder, EndlessState.done);
+  static EndlessStateProperty done(StatelessWidgetResolver builder) =>
+      EndlessStateProperty(
+        (BuildContext context) =>
+            StateProperty.resolveState<EndlessState, Widget>(
+          () => builder(context),
+          EndlessState.done,
+        ),
+      );
 
   /// Resolves `null` as the value regardless of the state of the scroll view.
-  static StateProperty<EndlessState, Null> never() => StateProperty.never();
+  static EndlessStateProperty never() => EndlessStateProperty(
+      (_context) => StateProperty.never<EndlessState, Widget>());
 }
 
 /// If a builder exists, then use the default state property for that builder.
 /// Otherwise if no builder was provided, provide a never state property since
 /// the client has no builder for that state.
-StateProperty<EndlessState, Widget?> _resolveBuilderToStateProperty(
-  StatelessBuilder? builder,
-  StateProperty<EndlessState, Widget?> Function(StatelessBuilder builder)
-      resolver,
+EndlessStateProperty _resolveBuilderToStateProperty(
+  StatelessWidgetResolver? builder,
+  EndlessStateProperty Function(StatelessWidgetResolver builder) resolver,
 ) {
   if (builder != null) {
     return resolver(builder);
@@ -55,8 +74,8 @@ StateProperty<EndlessState, Widget?> _resolveBuilderToStateProperty(
   return EndlessStateProperty.never();
 }
 
-StateProperty<EndlessState, Widget?> resolveHeaderBuilderToStateProperty(
-  StatelessBuilder? builder,
+EndlessStateProperty resolveHeaderBuilderToStateProperty(
+  StatelessWidgetResolver? builder,
 ) {
   return _resolveBuilderToStateProperty(
     builder,
@@ -64,23 +83,24 @@ StateProperty<EndlessState, Widget?> resolveHeaderBuilderToStateProperty(
   );
 }
 
-StateProperty<EndlessState, Widget?> resolveEmptyBuilderToStateProperty(
-  StatelessBuilder? builder,
+EndlessStateProperty resolveEmptyBuilderToStateProperty(
+  StatelessWidgetResolver? builder,
 ) {
   return _resolveBuilderToStateProperty(
     builder,
-    (StatelessBuilder builder) => EndlessStateProperty.resolveWith((states) {
+    (StatelessWidgetResolver builder) =>
+        EndlessStateProperty.resolveWith((context, states) {
       if (states.contains(EndlessState.empty) &&
           !states.contains(EndlessState.loading)) {
-        return builder();
+        return builder(context);
       }
       return null;
     }),
   );
 }
 
-StateProperty<EndlessState, Widget?> resolveLoadingBuilderToStateProperty(
-  StatelessBuilder? builder,
+EndlessStateProperty resolveLoadingBuilderToStateProperty(
+  StatelessWidgetResolver? builder,
 ) {
   return _resolveBuilderToStateProperty(
     builder,
@@ -88,26 +108,27 @@ StateProperty<EndlessState, Widget?> resolveLoadingBuilderToStateProperty(
   );
 }
 
-StateProperty<EndlessState, Widget?> resolveLoadMoreBuilderToStateProperty(
-  StatelessBuilder? builder,
+EndlessStateProperty resolveLoadMoreBuilderToStateProperty(
+  StatelessWidgetResolver? builder,
 ) {
   return _resolveBuilderToStateProperty(
     builder,
-    (StatelessBuilder builder) => EndlessStateProperty.resolveWith((states) {
+    (StatelessWidgetResolver builder) =>
+        EndlessStateProperty.resolveWith((context, states) {
       if (states.intersection({
         EndlessState.done,
         EndlessState.loading,
         EndlessState.empty,
       }).isEmpty) {
-        return builder();
+        return builder(context);
       }
       return null;
     }),
   );
 }
 
-StateProperty<EndlessState, Widget?> resolveFooterBuilderToStateProperty(
-    StatelessBuilder? builder) {
+EndlessStateProperty resolveFooterBuilderToStateProperty(
+    StatelessWidgetResolver? builder) {
   return _resolveBuilderToStateProperty(
     builder,
     EndlessStateProperty.all,

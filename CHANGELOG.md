@@ -1,3 +1,7 @@
+## 1.2.1
+
+* Update state property pattern to fix regression.
+
 ## 1.2.0
 
 * Abstract state property pattern out of lib to separate `state_property` package.
