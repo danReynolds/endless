@@ -45,34 +45,34 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
   final double? extentAfterFactor;
 
   /// The builder function for the grid view header.
-  final Widget Function(BuildContext context)? headerBuilder;
+  final Widget Function()? headerBuilder;
 
   /// The state property for the grid view header.
-  final EndlessStateProperty<Widget>? headerBuilderState;
+  final EndlessStateProperty? headerBuilderState;
 
   /// The builder function for the grid view empty state.
-  final Widget Function(BuildContext context)? emptyBuilder;
+  final Widget Function()? emptyBuilder;
 
   /// The state property for the grid view empty state.
-  final EndlessStateProperty<Widget>? emptyBuilderState;
+  final EndlessStateProperty? emptyBuilderState;
 
   /// The builder function for the grid view load more action widget.
-  final Widget Function(BuildContext context)? loadMoreBuilder;
+  final Widget Function()? loadMoreBuilder;
 
   /// The state property for the grid view load more action widget.
-  final EndlessStateProperty<Widget>? loadMoreBuilderState;
+  final EndlessStateProperty? loadMoreBuilderState;
 
   /// The builder function for the grid view footer.
-  final Widget Function(BuildContext context)? footerBuilder;
+  final Widget Function()? footerBuilder;
 
   /// The state property for the grid view footer.
-  final EndlessStateProperty<Widget>? footerBuilderState;
+  final EndlessStateProperty? footerBuilderState;
 
   /// The builder function for the grid view loading state.
-  final Widget Function(BuildContext context)? loadingBuilder;
+  final Widget Function()? loadingBuilder;
 
   /// The state property for the grid view loading state.
-  final EndlessStateProperty<Widget>? loadingBuilderState;
+  final EndlessStateProperty? loadingBuilderState;
 
   const EndlessPaginationGridView({
     required this.loadMore,

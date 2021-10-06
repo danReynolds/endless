@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 /// states of the infinite loading scroll view.
 class EndlessStreamScrollView<T> extends StatefulWidget {
   final EndlessStreamScrollViewData<T> loadMoreScrollViewData;
-  final Widget Function(BuildContext context, List<T> items) scrollViewBuilder;
+  final Widget Function(List<T> items) scrollViewBuilder;
 
   const EndlessStreamScrollView({
     required this.scrollViewBuilder,
@@ -33,7 +33,7 @@ class _EndlessStreamScrollViewState<T>
     extends State<EndlessStreamScrollView<T>> {
   final ScrollController _scrollController = ScrollController();
 
-  Widget _buildDefaultLoader(BuildContext context) {
+  Widget _buildDefaultLoader() {
     return const EndlessDefaultLoadingIndicator();
   }
 
@@ -76,26 +76,25 @@ class _EndlessStreamScrollViewState<T>
         );
 
     final slivers = [
-      _buildSliverBoxAdapter(headerBuilderState.resolve(context, states)),
+      _buildSliverBoxAdapter(headerBuilderState.resolve(states)),
       states.contains(EndlessState.empty)
           ? _buildSliverBoxAdapter(
-              emptyBuilderState.resolve(context, states),
+              emptyBuilderState.resolve(states),
             )
           : SliverPadding(
               padding: loadMoreScrollViewData.padding!,
-              sliver: widget.scrollViewBuilder(context, items),
+              sliver: widget.scrollViewBuilder(items),
             ),
       _buildSliverBoxAdapter(
-        loadingBuilderState.resolve(context, states),
+        loadingBuilderState.resolve(states),
       ),
       _buildSliverBoxAdapter(
         loadMoreBuilderState.resolve(
-          context,
           states,
         ),
       ),
       _buildSliverBoxAdapter(
-        footerBuilderState.resolve(context, states),
+        footerBuilderState.resolve(states),
       ),
     ].where((sliver) => sliver != null).toList();
 

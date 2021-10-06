@@ -130,9 +130,9 @@ class MyApp extends StatelessWidget {
 ```
 
 In this example, we've added a header to our list. Now what if we only wanted to show our header once we've loaded items? `Endless` scroll views use the `StateProperty` pattern found in
-Flutter Material's core widgets such as [Button](https://api.flutter.dev/flutter/material/ButtonStyle-class.html) with its [Material State Property](https://api.flutter.dev/flutter/material/MaterialStateProperty-class.html).
+Flutter Material's core widgets such as [Material State Property](https://api.flutter.dev/flutter/material/MaterialStateProperty-class.html).
 
-The Material UI uses this pattern to let consumers of `Button` style it differently when it is in one more states (hover, pressed, etc). The basic example from the docs looks like this:
+The Material UI uses this pattern to let consumers of core widgets like `ElevatedButton` style it differently when it is in one more states (hover, pressed, etc). The basic example from the docs looks like this:
 
 ```dart
 ElevatedButton(
@@ -208,7 +208,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-The full list of state property helpers consists of the following:
+The full list of endless state property helpers are given below:
 
 * `EndlessStateProperty.all`
 * `EndlessStateProperty.loading`
@@ -218,7 +218,7 @@ The full list of state property helpers consists of the following:
 * `EndlessStateProperty.resolveWith`
 
 
-Some builder functions have default state property behaviors. The `emptyBuilder` parameter for example, is automatically wrapped in an `emptyStateBuilder` defined to only be built if the scroll view is empty and not loading as shown below:
+Some builder functions have default state property behaviors. The `emptyBuilder` parameter for example is automatically wrapped in an `emptyStateBuilder` defined to only be built if the scroll view is empty and not loading as shown below:
 
 ```dart
 EndlessStateProperty<Widget?> resolveEmptyBuilderToStateProperty(
@@ -238,7 +238,7 @@ EndlessStateProperty<Widget?> resolveEmptyBuilderToStateProperty(
 }
 ```
 
-If that's not the default you would like for your empty state, no problem! You can always provide your own `emptyBuilderState` to override it.
+The goal of these defaults like for the `empty` state is to provide typical behavior for an endless scroll view. If that's not the default you would like for your empty state, no problem! You can always provide your own `emptyBuilderState` to override it.
 
 # Streams
 
