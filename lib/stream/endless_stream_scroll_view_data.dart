@@ -19,6 +19,7 @@ class EndlessStreamScrollViewData<T> {
   final Widget Function(BuildContext context)? loadingBuilder;
   final Widget Function(BuildContext context)? loadMoreBuilder;
   final Widget Function(BuildContext context)? footerBuilder;
+  final void Function(Set<EndlessState> states)? onStateChange;
 
   // Default to fetching the next batch once the scroll view has less than 40%
   // of the available space left to scroll
@@ -44,6 +45,7 @@ class EndlessStreamScrollViewData<T> {
     required this.controller,
     required this.padding,
     required this.loadOnSubscribe,
+    required this.onStateChange,
   }) {
     padding ??= EdgeInsets.zero;
     loadOnSubscribe ??= false;

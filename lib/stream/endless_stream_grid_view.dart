@@ -72,6 +72,9 @@ class EndlessStreamGridView<T> extends StatelessWidget {
   /// load more data.
   final double? extentAfterFactor;
 
+  /// A callback function that provides the current states of the endless scroll view whenever they change.
+  final void Function(Set<EndlessState> states)? onStateChange;
+
   const EndlessStreamGridView({
     required this.loadMore,
     required this.itemBuilder,
@@ -88,6 +91,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
     this.footerBuilder,
     this.footerBuilderState,
     this.controller,
+    this.onStateChange,
     this.extentAfterFactor = 0.4,
     this.loadOnSubscribe = true,
     this.padding = const EdgeInsets.all(0),
@@ -153,6 +157,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
         stream: stream,
         loadOnSubscribe: loadOnSubscribe,
         padding: padding,
+        onStateChange: onStateChange,
       ),
     );
   }

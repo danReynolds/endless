@@ -121,7 +121,7 @@ class _EndlessPaginationStreamBuilderState<T>
       (newItems) {
         final maxPages = widget.paginationDelegate.maxPages;
         final canLoadMore =
-            newItems.length == widget.paginationDelegate.pageSize &&
+            newItems.length >= widget.paginationDelegate.pageSize &&
                 (maxPages == null || _pageIndex < maxPages - 1);
 
         _streamController.sink.add(newItems);
