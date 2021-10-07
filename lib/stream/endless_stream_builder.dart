@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:endless/endless_state_property.dart';
 import 'package:endless/stream/endless_stream_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class EndlessStreamBuilder<T> extends StatefulWidget {
   final void Function() loadMore;
+  final Function(Set<EndlessState> states)? onStateChange;
   final Stream<List<T>> stream;
   final Widget Function({
     required List<T> items,
@@ -20,6 +22,7 @@ class EndlessStreamBuilder<T> extends StatefulWidget {
     required this.loadMore,
     required this.builder,
     required this.stream,
+    this.onStateChange,
     this.controller,
     this.loadOnSubscribe = true,
     key,
@@ -37,6 +40,7 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
   final ScrollController _scrollController = ScrollController();
   bool _pendingLazyClear = false;
   bool _isPaused = false;
+  Set<EndlessState>? _prevStates;
 
   @override
   void didUpdateWidget(covariant EndlessStreamBuilder<T> oldWidget) {
@@ -183,6 +187,17 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
 
   @override
   Widget build(context) {
+    final states = _resolveStates();
+
+    if (widget.onStateChange != null) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        if (_prevStates == null || !setEquals(_prevStates, states)) {
+          widget.onStateChange!(states);
+        }
+        _prevStates = states;
+      });
+    }
+
     return widget.builder(
       states: _resolveStates(),
       items: _items,

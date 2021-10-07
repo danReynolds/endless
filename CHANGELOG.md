@@ -1,3 +1,7 @@
+## 1.3.0
+
+* Adds support for an `onStateChange` handler that exposes the current states of the scroll view.
+
 ## 1.2.1
 
 * Update state property pattern to fix regression.

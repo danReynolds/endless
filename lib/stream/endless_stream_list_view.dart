@@ -72,11 +72,15 @@ class EndlessStreamListView<T> extends StatelessWidget {
   /// load more data.
   final double? extentAfterFactor;
 
+  /// A callback function that provides the current states of the endless scroll view whenever they change.
+  final void Function(Set<EndlessState> states)? onStateChange;
+
   const EndlessStreamListView({
     required this.loadMore,
     required this.itemBuilder,
     required this.stream,
     this.headerBuilder,
+    this.onStateChange,
     this.headerBuilderState,
     this.emptyBuilder,
     this.emptyBuilderState,
@@ -113,6 +117,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
       controller: data.controller,
       padding: data.padding,
       loadOnSubscribe: data.loadOnSubscribe,
+      onStateChange: data.onStateChange,
       itemPadding: data.itemPadding ?? EdgeInsets.zero,
     );
   }
@@ -131,14 +136,10 @@ class EndlessStreamListView<T> extends StatelessWidget {
                 totalItems: items.length,
               );
 
-              if (index > 0) {
-                return Padding(
-                  padding: itemPadding,
-                  child: itemWidget,
-                );
-              }
-
-              return itemWidget;
+              return Padding(
+                padding: itemPadding,
+                child: itemWidget,
+              );
             },
             childCount: items.length,
           ),
@@ -161,6 +162,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
         stream: stream,
         loadOnSubscribe: loadOnSubscribe,
         padding: padding,
+        onStateChange: onStateChange,
       ),
     );
   }

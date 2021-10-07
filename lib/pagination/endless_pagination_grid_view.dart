@@ -74,6 +74,9 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
   /// The state property for the grid view loading state.
   final EndlessStateProperty? loadingBuilderState;
 
+  /// A callback function that provides the current states of the endless scroll view whenever they change.
+  final void Function(Set<EndlessState> states)? onStateChange;
+
   const EndlessPaginationGridView({
     required this.loadMore,
     required this.itemBuilder,
@@ -91,6 +94,7 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
     this.footerBuilderState,
     this.controller,
     this.padding,
+    this.onStateChange,
     this.initialLoad = true,
     this.extentAfterFactor = 0.4,
     key,
@@ -130,6 +134,7 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
               footerBuilderState: footerBuilderState,
               padding: padding,
               loadOnSubscribe: loadOnSubscribe,
+              onStateChange: onStateChange,
             ),
           );
         },

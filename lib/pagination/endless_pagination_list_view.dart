@@ -74,12 +74,16 @@ class EndlessPaginationListView<T> extends StatelessWidget {
   /// The state property for the list view loading state.
   final EndlessStateProperty? loadingBuilderState;
 
+  /// A callback function that provides the current states of the endless scroll view whenever they change.
+  final void Function(Set<EndlessState> states)? onStateChange;
+
   const EndlessPaginationListView({
     required this.loadMore,
     required this.itemBuilder,
     required this.paginationDelegate,
     this.extentAfterFactor = 0.4,
     this.controller,
+    this.onStateChange,
     this.padding,
     this.itemPadding,
     this.headerBuilder,
@@ -133,6 +137,7 @@ class EndlessPaginationListView<T> extends StatelessWidget {
               padding: padding,
               itemPadding: itemPadding,
               loadOnSubscribe: loadOnSubscribe,
+              onStateChange: onStateChange,
             ),
           );
         },

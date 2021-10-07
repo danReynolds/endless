@@ -11,10 +11,11 @@ class EndlessStateProperty extends WidgetStateProperty<EndlessState> {
 
   /// The most flexible state property that allows for dynamically resolving the builder
   /// function based on the state of the scroll view.
-  static EndlessStateProperty resolveWith(StatefulWidgetResolver builder) =>
+  static EndlessStateProperty resolveWith(
+          StatefulWidgetResolver<EndlessState> builder) =>
       EndlessStateProperty(
         (BuildContext context) =>
-            StateProperty.resolveWith<EndlessState, Widget>(
+            StateProperty.resolveWith<EndlessState, Widget?>(
                 (states) => builder(context, states)),
       );
 
@@ -22,14 +23,14 @@ class EndlessStateProperty extends WidgetStateProperty<EndlessState> {
   static EndlessStateProperty all(StatelessWidgetResolver builder) =>
       EndlessStateProperty(
         (BuildContext context) =>
-            StateProperty.all<EndlessState, Widget>(() => builder(context)),
+            StateProperty.all<EndlessState, Widget?>(() => builder(context)),
       );
 
   /// Resolves the given builder if the scroll view is currently in the loading state.
   static EndlessStateProperty loading(StatelessWidgetResolver builder) =>
       EndlessStateProperty(
         (BuildContext context) =>
-            StateProperty.resolveState<EndlessState, Widget>(
+            StateProperty.resolveState<EndlessState, Widget?>(
           () => builder(context),
           EndlessState.loading,
         ),
@@ -39,7 +40,7 @@ class EndlessStateProperty extends WidgetStateProperty<EndlessState> {
   static EndlessStateProperty empty(StatelessWidgetResolver builder) =>
       EndlessStateProperty(
         (BuildContext context) =>
-            StateProperty.resolveState<EndlessState, Widget>(
+            StateProperty.resolveState<EndlessState, Widget?>(
           () => builder(context),
           EndlessState.empty,
         ),
@@ -49,7 +50,7 @@ class EndlessStateProperty extends WidgetStateProperty<EndlessState> {
   static EndlessStateProperty done(StatelessWidgetResolver builder) =>
       EndlessStateProperty(
         (BuildContext context) =>
-            StateProperty.resolveState<EndlessState, Widget>(
+            StateProperty.resolveState<EndlessState, Widget?>(
           () => builder(context),
           EndlessState.done,
         ),
@@ -57,7 +58,7 @@ class EndlessStateProperty extends WidgetStateProperty<EndlessState> {
 
   /// Resolves `null` as the value regardless of the state of the scroll view.
   static EndlessStateProperty never() => EndlessStateProperty(
-      (_context) => StateProperty.never<EndlessState, Widget>());
+      (_context) => StateProperty.never<EndlessState>());
 }
 
 /// If a builder exists, then use the default state property for that builder.

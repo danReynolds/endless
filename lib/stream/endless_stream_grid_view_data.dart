@@ -31,6 +31,7 @@ class EndlessStreamGridViewData<T> extends EndlessStreamScrollViewData<T> {
     required EndlessStreamController<T>? controller,
     required EdgeInsets? padding,
     required bool? loadOnSubscribe,
+    required final void Function(Set<EndlessState> states)? onStateChange,
   }) : super(
           extentAfterFactor: extentAfterFactor,
           headerBuilder: headerBuilder,
@@ -48,5 +49,6 @@ class EndlessStreamGridViewData<T> extends EndlessStreamScrollViewData<T> {
           controller: controller,
           padding: padding,
           loadOnSubscribe: loadOnSubscribe,
+          onStateChange: onStateChange,
         );
 }

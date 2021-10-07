@@ -81,10 +81,7 @@ class _EndlessStreamScrollViewState<T>
           ? _buildSliverBoxAdapter(
               emptyBuilderState.resolve(context, states),
             )
-          : SliverPadding(
-              padding: loadMoreScrollViewData.padding!,
-              sliver: widget.scrollViewBuilder(items),
-            ),
+          : widget.scrollViewBuilder(items),
       _buildSliverBoxAdapter(
         loadingBuilderState.resolve(context, states),
       ),
@@ -112,6 +109,7 @@ class _EndlessStreamScrollViewState<T>
           loadMore: loadMoreScrollViewData.loadMore,
           stream: loadMoreScrollViewData.stream,
           controller: loadMoreScrollViewData.controller,
+          onStateChange: loadMoreScrollViewData.onStateChange,
           loadOnSubscribe: loadMoreScrollViewData.loadOnSubscribe!,
           builder: ({
             required states,
@@ -135,10 +133,13 @@ class _EndlessStreamScrollViewState<T>
                 }
                 return false;
               },
-              child: CustomScrollView(
-                controller: _scrollController,
-                shrinkWrap: true,
-                slivers: _buildSlivers(states, items),
+              child: Padding(
+                padding: loadMoreScrollViewData.padding ?? EdgeInsets.zero,
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  shrinkWrap: true,
+                  slivers: _buildSlivers(states, items),
+                ),
               ),
             );
           },
