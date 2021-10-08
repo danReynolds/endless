@@ -1,3 +1,7 @@
+## 1.4.0
+
+* Update padding behavior around the `CustomScrollView`
+
 ## 1.3.0
 
 * Adds support for an `onStateChange` handler that exposes the current states of the scroll view.

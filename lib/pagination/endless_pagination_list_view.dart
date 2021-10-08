@@ -32,8 +32,8 @@ class EndlessPaginationListView<T> extends StatelessWidget {
   /// The padding around the scroll view.
   final EdgeInsets? padding;
 
-  /// The padding in between each item in the list view.
-  final EdgeInsets? itemPadding;
+  /// The padding number in between each item in the list view.
+  final double? itemPadding;
 
   /// The delegate that specifies the pagination requirements for the list view such as the maximum
   /// number of pages to load and the page size.

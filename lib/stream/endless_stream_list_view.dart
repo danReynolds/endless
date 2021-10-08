@@ -65,7 +65,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
   final EdgeInsets? padding;
 
   /// The padding in between each item in the list view.
-  final EdgeInsets itemPadding;
+  final double itemPadding;
 
   /// The fraction of the remaining quantity of content conceptually "below" the viewport in the scrollable
   /// relative to the maximum height of the scrollable region at which point [loadMore] should be called to
@@ -94,7 +94,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
     this.padding,
     this.extentAfterFactor = 0.4,
     this.loadOnSubscribe = true,
-    this.itemPadding = EdgeInsets.zero,
+    this.itemPadding = 0,
     key,
   }) : super(key: key);
 
@@ -118,7 +118,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
       padding: data.padding,
       loadOnSubscribe: data.loadOnSubscribe,
       onStateChange: data.onStateChange,
-      itemPadding: data.itemPadding ?? EdgeInsets.zero,
+      itemPadding: data.itemPadding ?? 0,
     );
   }
 
@@ -136,8 +136,14 @@ class EndlessStreamListView<T> extends StatelessWidget {
                 totalItems: items.length,
               );
 
+              // Do not add item padding to the first item since it is the padding between
+              // items and is applied as a top padding.
+              if (index == items.length - 1) {
+                return itemWidget;
+              }
+
               return Padding(
-                padding: itemPadding,
+                padding: EdgeInsets.only(bottom: itemPadding),
                 child: itemWidget,
               );
             },
