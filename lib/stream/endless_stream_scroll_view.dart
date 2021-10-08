@@ -54,6 +54,7 @@ class _EndlessStreamScrollViewState<T>
   /// specified builder functions or state properties.
   List<Widget> _buildSlivers(Set<EndlessState> states, List<T> items) {
     final loadMoreScrollViewData = widget.loadMoreScrollViewData;
+    final padding = loadMoreScrollViewData.padding;
 
     final headerBuilderState = loadMoreScrollViewData.headerBuilderState ??
         resolveHeaderBuilderToStateProperty(
@@ -96,12 +97,34 @@ class _EndlessStreamScrollViewState<T>
       ),
     ].where((sliver) => sliver != null).toList();
 
+    // The top sliver is wrapped in the top padding and the bottom sliver is wrapped in the bottom padding.
+    if (slivers.length > 2) {
+      slivers[0] = SliverPadding(
+        padding: EdgeInsets.only(top: padding?.top ?? 0),
+        sliver: slivers[0],
+      );
+
+      slivers[slivers.length - 1] = SliverPadding(
+        padding: EdgeInsets.only(bottom: padding?.bottom ?? 0),
+        sliver: slivers[slivers.length - 1],
+      );
+    } else if (slivers.length == 1) {
+      slivers[0] = SliverPadding(
+        padding: EdgeInsets.only(
+          top: padding?.top ?? 0,
+          bottom: padding?.bottom ?? 0,
+        ),
+        sliver: slivers[0],
+      );
+    }
+
     return List<Widget>.from(slivers);
   }
 
   @override
   Widget build(context) {
     final loadMoreScrollViewData = widget.loadMoreScrollViewData;
+    final padding = loadMoreScrollViewData.padding;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -134,7 +157,11 @@ class _EndlessStreamScrollViewState<T>
                 return false;
               },
               child: Padding(
-                padding: loadMoreScrollViewData.padding ?? EdgeInsets.zero,
+                // The horizontal padding is applied around the scroll view
+                padding: EdgeInsets.only(
+                  left: padding?.left ?? 0,
+                  right: padding?.right ?? 0,
+                ),
                 child: CustomScrollView(
                   controller: _scrollController,
                   shrinkWrap: true,

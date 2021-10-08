@@ -10,7 +10,7 @@ class EndlessStreamListViewData<T> extends EndlessStreamScrollViewData<T> {
     required int index,
     required int totalItems,
   }) itemBuilder;
-  final EdgeInsets? itemPadding;
+  final double? itemPadding;
 
   EndlessStreamListViewData({
     required this.itemBuilder,
