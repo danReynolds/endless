@@ -98,7 +98,7 @@ class _EndlessStreamScrollViewState<T>
     ].where((sliver) => sliver != null).toList();
 
     // The top sliver is wrapped in the top padding and the bottom sliver is wrapped in the bottom padding.
-    if (slivers.length > 2) {
+    if (slivers.length >= 2) {
       slivers[0] = SliverPadding(
         padding: EdgeInsets.only(top: padding?.top ?? 0),
         sliver: slivers[0],

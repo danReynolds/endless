@@ -1,3 +1,7 @@
+## 1.4.1
+
+* Fix bug where padding wasn't being applied properly in all scenarios.
+
 ## 1.4.0
 
 * Update padding behavior around the `CustomScrollView`
