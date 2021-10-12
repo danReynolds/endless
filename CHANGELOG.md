@@ -1,3 +1,7 @@
+## 1.5.2
+
+* Move lazy clear resetting to the clear API
+
 ## 1.5.1
 
 * Fix bug where lazy clear wasn't being reset on subscribing to a new stream.

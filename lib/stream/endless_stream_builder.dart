@@ -110,11 +110,7 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
   _subscribeToStream() async {
     setState(() {
       _canLoadMore = true;
-      _pendingLazyClear = false;
-
-      if (widget.loadOnSubscribe) {
-        _isLoading = true;
-      }
+      _isLoading = widget.loadOnSubscribe;
     });
 
     await _cancelSubscription();
@@ -164,6 +160,7 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
     } else {
       setState(() {
         _items = [];
+        _pendingLazyClear = false;
       });
     }
   }
