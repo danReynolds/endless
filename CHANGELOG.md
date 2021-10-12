@@ -1,3 +1,7 @@
+## 1.5.1
+
+* Fix bug where lazy clear wasn't being reset on subscribing to a new stream.
+
 ## 1.5.0
 
 * Adds support for a `willClear` state used to determine if the endless scroll view will clear its items on next load.
