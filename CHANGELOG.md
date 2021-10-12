@@ -1,3 +1,7 @@
+## 1.5.0
+
+* Adds support for a `willClear` state used to determine if the endless scroll view will clear its items on next load.
+
 ## 1.4.1
 
 * Fix bug where padding wasn't being applied properly in all scenarios.

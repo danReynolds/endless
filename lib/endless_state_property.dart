@@ -4,7 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:state_property/state_property.dart';
 import 'package:state_property/widget_state_property.dart';
 
-enum EndlessState { empty, loading, done }
+enum EndlessState {
+  /// Whether the endless scroll view currently has no items.
+  empty,
+
+  /// Whether the endless scroll view is currently loading items.
+  loading,
+
+  /// Whether the endless scroll view has finished loading all items. Determined when loading
+  /// items returns fewer items than the expected size.
+  done,
+
+  /// Whether the endless scroll view will clear its current items on next load set when
+  /// [EndlessStreamController.clear] is called with the [lazy] specification.
+  willClear
+}
 
 class EndlessStateProperty extends WidgetStateProperty<EndlessState> {
   EndlessStateProperty(resolve) : super(resolve);
@@ -46,6 +60,16 @@ class EndlessStateProperty extends WidgetStateProperty<EndlessState> {
         ),
       );
 
+  /// Resolves the given builder if the scroll view will clear its current items on next load.
+  static EndlessStateProperty willClear(StatelessWidgetResolver builder) =>
+      EndlessStateProperty(
+        (BuildContext context) =>
+            StateProperty.resolveState<EndlessState, Widget?>(
+          () => builder(context),
+          EndlessState.willClear,
+        ),
+      );
+
   /// Resolves the given builder if the scroll view is currently in the done state.
   static EndlessStateProperty done(StatelessWidgetResolver builder) =>
       EndlessStateProperty(
@@ -57,8 +81,8 @@ class EndlessStateProperty extends WidgetStateProperty<EndlessState> {
       );
 
   /// Resolves `null` as the value regardless of the state of the scroll view.
-  static EndlessStateProperty never() => EndlessStateProperty(
-      (_context) => StateProperty.never<EndlessState>());
+  static EndlessStateProperty never() =>
+      EndlessStateProperty((_context) => StateProperty.never<EndlessState>());
 }
 
 /// If a builder exists, then use the default state property for that builder.

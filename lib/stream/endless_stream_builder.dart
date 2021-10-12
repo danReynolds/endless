@@ -182,6 +182,10 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
       states.add(EndlessState.empty);
     }
 
+    if (_pendingLazyClear) {
+      states.add(EndlessState.willClear);
+    }
+
     return states;
   }
 
