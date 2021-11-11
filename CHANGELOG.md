@@ -1,3 +1,7 @@
+## 1.5.3
+
+* Update documentation
+
 ## 1.5.2
 
 * Move lazy clear resetting to the clear API

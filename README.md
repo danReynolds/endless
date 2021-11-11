@@ -1,9 +1,19 @@
 # Endless
 
-An infinite scroll view library with out of the box widgets for loading using [pagination](#pagination), [streams](#streams) and [Firestore streams](https://pub.dev/packages/endless_firestore). Built on top of [CustomScrollView](https://api.flutter.dev/flutter/widgets/CustomScrollView-class.html).
+A scroll view library with out of the box widgets for infinite loading using [pagination](#pagination), [streams](#streams) and [Firestore streams](https://pub.dev/packages/endless_firestore). Built on top of [CustomScrollView](https://api.flutter.dev/flutter/widgets/CustomScrollView-class.html).
+
+![Demo](./demo.gif)
+
+# Features
+
+1. **Data loading**: Many scrollable lists should be populated with an initial set of items and then load more data as a user scrolls down the list. The main job of the library is to abstract that logic into an easy to use API for building infinite scroll views that dynamically load more data.
+2. **Common scrollable elements**: Many scroll view widgets have a common set of UI elements that are baked into the library including builders for *headers*, *footers*, *loading indicators*, and *empty states*.
+3. **Multiple data sources**: Support for multiple types of data sources out of the box like paginated APIs and streams in order to minimize the amount of data massaging clients have to do when working with scroll views.
+4. **Lists + Grids**: For Flutter mobile apps, the majority of the time scrollable views use lists, while on desktop, the added screen real estate is ideal for displaying items in grids. The library comes with both list and grid views with shared APIs.
 
 # Pagination
 
+The most common data source for infinite lists is generally some sort of paginated API. The library comes with two pagination widgets `EndlessPaginationListView` and `EndlessPaginationGridView` for working with this type of data. Let's take a look at some basic examples: 
 ## Basic List Example
 
 ```dart

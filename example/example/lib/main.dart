@@ -64,26 +64,32 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: EndlessPaginationListView<ExampleItem>(
-        loadMore: (pageIndex) async => pager.nextBatch(),
-        paginationDelegate: EndlessPaginationDelegate(
-          pageSize: 5,
-        ),
-        controller: controller,
-        itemBuilder: (
-          context, {
-          required item,
-          required index,
-          required totalItems,
-        }) {
-          return Container(
-            color: Colors.purple,
-            child: Text(item.title),
-          );
-        },
-        loadMoreBuilder: (context) => TextButton(
-          child: const Text('load more'),
-          onPressed: () => controller.loadMore(),
+      body: Container(
+        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+        child: EndlessPaginationListView<ExampleItem>(
+          loadMore: (pageIndex) async => pager.nextBatch(),
+          paginationDelegate: EndlessPaginationDelegate(
+            pageSize: 5,
+          ),
+          controller: controller,
+          headerBuilder: (context) {
+            return const Text("I'm a header!");
+          },
+          footerBuilder: (context) {
+            return const Text("I'm a footer!");
+          },
+          itemBuilder: (
+            context, {
+            required item,
+            required index,
+            required totalItems,
+          }) {
+            return Text(item.title);
+          },
+          loadMoreBuilder: (context) => TextButton(
+            child: const Text('load more'),
+            onPressed: () => controller.loadMore(),
+          ),
         ),
       ),
     );
