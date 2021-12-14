@@ -16,6 +16,7 @@ class EndlessStreamGridViewData<T> extends EndlessStreamScrollViewData<T> {
     required this.itemBuilder,
     required this.gridDelegate,
     required double? extentAfterFactor,
+    required ScrollController? scrollController,
     required Widget Function(BuildContext context)? headerBuilder,
     required Widget Function(BuildContext context)? emptyBuilder,
     required Widget Function(BuildContext context)? loadingBuilder,
@@ -33,6 +34,7 @@ class EndlessStreamGridViewData<T> extends EndlessStreamScrollViewData<T> {
     required bool? loadOnSubscribe,
     required final void Function(Set<EndlessState> states)? onStateChange,
   }) : super(
+          scrollController: scrollController,
           extentAfterFactor: extentAfterFactor,
           headerBuilder: headerBuilder,
           emptyBuilder: emptyBuilder,

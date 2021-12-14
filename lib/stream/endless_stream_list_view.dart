@@ -53,6 +53,9 @@ class EndlessStreamListView<T> extends StatelessWidget {
   /// The state property for the list view loading state.
   final EndlessStateProperty? loadingBuilderState;
 
+  /// The scroll controller for the list view.
+  final ScrollController? scrollController;
+
   /// The stream controller used to perform actions on the list view such as loading more data
   /// or clearing the list.
   final EndlessStreamController<T>? controller;
@@ -91,6 +94,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
     this.footerBuilder,
     this.footerBuilderState,
     this.controller,
+    this.scrollController,
     this.padding,
     this.extentAfterFactor = 0.4,
     this.loadOnSubscribe = true,
@@ -115,6 +119,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
       footerBuilder: data.footerBuilder,
       footerBuilderState: data.footerBuilderState,
       controller: data.controller,
+      scrollController: data.scrollController,
       padding: data.padding,
       loadOnSubscribe: data.loadOnSubscribe,
       onStateChange: data.onStateChange,
@@ -165,6 +170,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
         loadMoreBuilderState: loadMoreBuilderState,
         footerBuilderState: footerBuilderState,
         controller: controller,
+        scrollController: scrollController,
         stream: stream,
         loadOnSubscribe: loadOnSubscribe,
         padding: padding,

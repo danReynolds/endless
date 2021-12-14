@@ -8,6 +8,7 @@ class EndlessStreamScrollViewData<T> {
   final void Function() loadMore;
   final Stream<List<T>> stream;
   final EndlessStreamController<T>? controller;
+  final ScrollController? scrollController;
 
   final EndlessStateProperty? headerBuilderState;
   final EndlessStateProperty? emptyBuilderState;
@@ -29,6 +30,7 @@ class EndlessStreamScrollViewData<T> {
   EdgeInsets? padding;
 
   EndlessStreamScrollViewData({
+    required this.scrollController,
     required this.extentAfterFactor,
     required this.loadMore,
     required this.stream,

@@ -1,3 +1,7 @@
+## 1.6.0
+
+* Expose scroll controller in public API
+
 ## 1.5.3
 
 * Update documentation

@@ -44,6 +44,9 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
   /// load more data.
   final double? extentAfterFactor;
 
+  /// The scroll controller for the grid view.
+  final ScrollController? scrollController;
+
   /// The builder function for the grid view header.
   final Widget Function(BuildContext context)? headerBuilder;
 
@@ -93,6 +96,7 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
     this.footerBuilder,
     this.footerBuilderState,
     this.controller,
+    this.scrollController,
     this.padding,
     this.onStateChange,
     this.initialLoad = true,
@@ -121,6 +125,7 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
               itemBuilder: itemBuilder,
               loadMore: loadMore,
               controller: controller,
+              scrollController: scrollController,
               stream: stream,
               headerBuilder: headerBuilder,
               headerBuilderState: headerBuilderState,

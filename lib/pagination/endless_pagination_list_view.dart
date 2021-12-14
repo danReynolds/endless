@@ -25,6 +25,9 @@ class EndlessPaginationListView<T> extends StatelessWidget {
   /// or clearing the list.
   final EndlessPaginationController<T>? controller;
 
+  /// The scroll controller for the list view.
+  final ScrollController? scrollController;
+
   /// Whether to immediately request data from the stream when it is first subscribed to by calling
   /// the [loadMore] API.
   final bool? initialLoad;
@@ -83,6 +86,7 @@ class EndlessPaginationListView<T> extends StatelessWidget {
     required this.paginationDelegate,
     this.extentAfterFactor = 0.4,
     this.controller,
+    this.scrollController,
     this.onStateChange,
     this.padding,
     this.itemPadding,
@@ -123,6 +127,7 @@ class EndlessPaginationListView<T> extends StatelessWidget {
               itemBuilder: itemBuilder,
               loadMore: loadMore,
               controller: controller,
+              scrollController: scrollController,
               stream: stream,
               headerBuilder: headerBuilder,
               headerBuilderState: headerBuilderState,

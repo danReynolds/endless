@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:state_property/state_property.dart';
-import 'package:state_property/widget_state_property.dart';
 
 enum EndlessState {
   /// Whether the endless scroll view currently has no items.

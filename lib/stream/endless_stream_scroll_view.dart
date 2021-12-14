@@ -31,7 +31,21 @@ class EndlessStreamScrollView<T> extends StatefulWidget {
 
 class _EndlessStreamScrollViewState<T>
     extends State<EndlessStreamScrollView<T>> {
-  final ScrollController _scrollController = ScrollController();
+  late ScrollController _scrollController;
+
+  @override
+  initState() {
+    super.initState();
+
+    _scrollController =
+        widget.loadMoreScrollViewData.scrollController ?? ScrollController();
+  }
+
+  @override
+  dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   Widget _buildDefaultLoader(BuildContext context) {
     return const EndlessDefaultLoadingIndicator();

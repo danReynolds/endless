@@ -37,7 +37,6 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
   bool _isLoading = false;
   bool _canLoadMore = true;
   StreamSubscription? _streamSubscription;
-  final ScrollController _scrollController = ScrollController();
   bool _pendingLazyClear = false;
   bool _isPaused = false;
   Set<EndlessState>? _prevStates;
@@ -94,9 +93,7 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
 
   @override
   dispose() {
-    _scrollController.dispose();
     super.dispose();
-
     _cancelSubscription();
   }
 

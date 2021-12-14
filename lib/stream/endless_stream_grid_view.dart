@@ -27,6 +27,9 @@ class EndlessStreamGridView<T> extends StatelessWidget {
   /// or clearing the grid.
   final EndlessStreamController<T>? controller;
 
+  /// The scroll controller for the grid view.
+  final ScrollController? scrollController;
+
   /// Whether to immediately request data from the stream when it is first subscribed to by calling
   /// the [EndlessStreamGridView.loadMore] API.
   final bool? loadOnSubscribe;
@@ -91,6 +94,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
     this.footerBuilder,
     this.footerBuilderState,
     this.controller,
+    this.scrollController,
     this.onStateChange,
     this.extentAfterFactor = 0.4,
     this.loadOnSubscribe = true,
@@ -116,6 +120,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
       footerBuilder: data.footerBuilder,
       footerBuilderState: data.footerBuilderState,
       controller: data.controller,
+      scrollController: data.scrollController,
       padding: data.padding,
       loadOnSubscribe: data.loadOnSubscribe,
     );
@@ -154,6 +159,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
         footerBuilderState: footerBuilderState,
         loadMore: loadMore,
         controller: controller,
+        scrollController: scrollController,
         stream: stream,
         loadOnSubscribe: loadOnSubscribe,
         padding: padding,
