@@ -127,9 +127,7 @@ class _EndlessPaginationStreamBuilderState<T>
         _streamController.sink.add(newItems);
 
         if (canLoadMore) {
-          setState(() {
-            _pageIndex = _pageIndex + 1;
-          });
+          _pageIndex = _pageIndex + 1;
         } else {
           _streamController.close();
         }
