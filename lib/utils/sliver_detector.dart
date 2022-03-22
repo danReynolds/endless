@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Hack: As a convenience for clients, we automatically wrap Box layout builders in a SliverToBoxAdapter
@@ -25,5 +26,6 @@ bool isSliver(Widget widget) {
       widget is SliverReorderableList ||
       widget is SliverSafeArea ||
       widget is SliverVisibility ||
+      widget is CupertinoSliverRefreshControl ||
       widget is SliverFadeTransition;
 }

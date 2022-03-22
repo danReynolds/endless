@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:endless/endless_state_property.dart';
 import 'package:endless/stream/endless_stream_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -108,6 +109,7 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
     setState(() {
       _canLoadMore = true;
       _isLoading = widget.loadOnSubscribe;
+      _pendingLazyClear = true;
     });
 
     await _cancelSubscription();

@@ -32,6 +32,7 @@ class EndlessStreamListViewData<T> extends EndlessStreamScrollViewData<T> {
     required ScrollController? scrollController,
     required EdgeInsets? padding,
     required bool? loadOnSubscribe,
+    required ScrollPhysics? physics,
     required final void Function(Set<EndlessState> states)? onStateChange,
   }) : super(
           extentAfterFactor: extentAfterFactor,
@@ -52,5 +53,6 @@ class EndlessStreamListViewData<T> extends EndlessStreamScrollViewData<T> {
           padding: padding,
           loadOnSubscribe: loadOnSubscribe,
           onStateChange: onStateChange,
+          physics: physics,
         );
 }

@@ -1,9 +1,10 @@
 import 'dart:async';
+
+import 'package:endless/endless_state_property.dart';
 import 'package:endless/stream/endless_stream_controller.dart';
 import 'package:endless/stream/endless_stream_grid_view_data.dart';
 import 'package:endless/stream/endless_stream_scroll_view.dart';
 import 'package:endless/stream/endless_stream_scroll_view_data.dart';
-import 'package:endless/endless_state_property.dart';
 import 'package:flutter/material.dart';
 
 /// An infinite loading grid view that builds items added to the stream into a scrollable grid.
@@ -78,6 +79,9 @@ class EndlessStreamGridView<T> extends StatelessWidget {
   /// A callback function that provides the current states of the endless scroll view whenever they change.
   final void Function(Set<EndlessState> states)? onStateChange;
 
+  // The physics for the grid view.
+  final ScrollPhysics? physics;
+
   const EndlessStreamGridView({
     required this.loadMore,
     required this.itemBuilder,
@@ -96,6 +100,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
     this.controller,
     this.scrollController,
     this.onStateChange,
+    this.physics,
     this.extentAfterFactor = 0.4,
     this.loadOnSubscribe = true,
     this.padding = const EdgeInsets.all(0),
@@ -123,6 +128,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
       scrollController: data.scrollController,
       padding: data.padding,
       loadOnSubscribe: data.loadOnSubscribe,
+      physics: data.physics,
     );
   }
 
@@ -164,6 +170,7 @@ class EndlessStreamGridView<T> extends StatelessWidget {
         loadOnSubscribe: loadOnSubscribe,
         padding: padding,
         onStateChange: onStateChange,
+        physics: physics,
       ),
     );
   }

@@ -1,9 +1,10 @@
+import 'package:endless/endless_state_property.dart';
 import 'package:endless/stream/endless_stream_builder.dart';
 import 'package:endless/stream/endless_stream_scroll_view_data.dart';
-import 'package:endless/endless_state_property.dart';
 import 'package:endless/utils/sliver_detector.dart';
 import 'package:endless/widgets/endless_default_loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 /// Infinite loading scroll view using a CustomScrollView with the following customizable builders:
 /// - header builder
@@ -159,15 +160,21 @@ class _EndlessStreamScrollViewState<T>
 
             return NotificationListener<ScrollNotification>(
               onNotification: (notification) {
-                if (!isLoading &&
-                    canLoadMore &&
-                    !isEmpty &&
-                    notification is ScrollUpdateNotification &&
-                    _scrollController.position.extentAfter <
-                        constraints.maxHeight *
-                            loadMoreScrollViewData.extentAfterFactor!) {
-                  loadMore();
+                if (notification is ScrollUpdateNotification) {
+                  final scrollPosition = _scrollController.position;
+
+                  if (!isLoading &&
+                      canLoadMore &&
+                      !isEmpty &&
+                      scrollPosition.userScrollDirection ==
+                          ScrollDirection.reverse &&
+                      scrollPosition.extentAfter <
+                          constraints.maxHeight *
+                              loadMoreScrollViewData.extentAfterFactor!) {
+                    loadMore();
+                  }
                 }
+
                 return false;
               },
               child: Padding(
@@ -179,6 +186,7 @@ class _EndlessStreamScrollViewState<T>
                 child: CustomScrollView(
                   controller: _scrollController,
                   shrinkWrap: true,
+                  physics: loadMoreScrollViewData.physics,
                   slivers: _buildSlivers(states, items),
                 ),
               ),

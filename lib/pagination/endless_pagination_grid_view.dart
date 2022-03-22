@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'package:endless/stream/endless_stream_grid_view.dart';
+
 import 'package:endless/endless_state_property.dart';
 import 'package:endless/pagination/endless_pagination_controller.dart';
 import 'package:endless/pagination/endless_pagination_delegate.dart';
 import 'package:endless/pagination/endless_pagination_stream_builder.dart';
+import 'package:endless/stream/endless_stream_grid_view.dart';
 import 'package:endless/stream/endless_stream_grid_view_data.dart';
 import 'package:flutter/material.dart';
 
@@ -80,6 +81,9 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
   /// A callback function that provides the current states of the endless scroll view whenever they change.
   final void Function(Set<EndlessState> states)? onStateChange;
 
+  // The scroll physics for the grid view.
+  final ScrollPhysics? physics;
+
   const EndlessPaginationGridView({
     required this.loadMore,
     required this.itemBuilder,
@@ -99,6 +103,7 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
     this.scrollController,
     this.padding,
     this.onStateChange,
+    this.physics,
     this.initialLoad = true,
     this.extentAfterFactor = 0.4,
     key,
@@ -140,6 +145,7 @@ class EndlessPaginationGridView<T> extends StatelessWidget {
               padding: padding,
               loadOnSubscribe: loadOnSubscribe,
               onStateChange: onStateChange,
+              physics: physics,
             ),
           );
         },

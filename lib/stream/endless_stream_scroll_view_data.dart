@@ -1,6 +1,6 @@
+import 'package:endless/endless_state_property.dart';
 import 'package:endless/stream/endless_stream_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:endless/endless_state_property.dart';
 
 /// Data class for an EndlessStreamScrollView to ensure that all fields are passed
 /// when instantiated
@@ -28,6 +28,7 @@ class EndlessStreamScrollViewData<T> {
 
   bool? loadOnSubscribe;
   EdgeInsets? padding;
+  ScrollPhysics? physics;
 
   EndlessStreamScrollViewData({
     required this.scrollController,
@@ -48,6 +49,7 @@ class EndlessStreamScrollViewData<T> {
     required this.padding,
     required this.loadOnSubscribe,
     required this.onStateChange,
+    required this.physics,
   }) {
     padding ??= EdgeInsets.zero;
     loadOnSubscribe ??= false;

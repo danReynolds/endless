@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:endless/endless_state_property.dart';
 import 'package:endless/pagination/endless_pagination_controller.dart';
 import 'package:endless/pagination/endless_pagination_delegate.dart';
@@ -80,6 +81,8 @@ class EndlessPaginationListView<T> extends StatelessWidget {
   /// A callback function that provides the current states of the endless scroll view whenever they change.
   final void Function(Set<EndlessState> states)? onStateChange;
 
+  final ScrollPhysics? physics;
+
   const EndlessPaginationListView({
     required this.loadMore,
     required this.itemBuilder,
@@ -100,6 +103,7 @@ class EndlessPaginationListView<T> extends StatelessWidget {
     this.loadMoreBuilderState,
     this.footerBuilder,
     this.footerBuilderState,
+    this.physics,
     this.initialLoad = true,
     key,
   }) : super(key: key);
@@ -143,6 +147,7 @@ class EndlessPaginationListView<T> extends StatelessWidget {
               itemPadding: itemPadding,
               loadOnSubscribe: loadOnSubscribe,
               onStateChange: onStateChange,
+              physics: physics,
             ),
           );
         },
