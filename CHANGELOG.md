@@ -1,6 +1,6 @@
 ## 1.6.1
 
-* Detect `CupertinoSliverRefreshControl` sliver.
+* Support physics
 
 ## 1.6.0
 
