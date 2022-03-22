@@ -1,3 +1,7 @@
+## 1.6.1
+
+* Support physics
+
 ## 1.6.0
 
 * Expose scroll controller in public API

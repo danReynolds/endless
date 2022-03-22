@@ -1,9 +1,10 @@
 import 'dart:async';
+
+import 'package:endless/endless_state_property.dart';
 import 'package:endless/stream/endless_stream_controller.dart';
 import 'package:endless/stream/endless_stream_list_view_data.dart';
 import 'package:endless/stream/endless_stream_scroll_view.dart';
 import 'package:endless/stream/endless_stream_scroll_view_data.dart';
-import 'package:endless/endless_state_property.dart';
 import 'package:flutter/material.dart';
 
 /// An infinite loading list view that builds items added to the stream into a scrollable list.
@@ -78,6 +79,9 @@ class EndlessStreamListView<T> extends StatelessWidget {
   /// A callback function that provides the current states of the endless scroll view whenever they change.
   final void Function(Set<EndlessState> states)? onStateChange;
 
+  // The scroll physics for the list view.
+  final ScrollPhysics? physics;
+
   const EndlessStreamListView({
     required this.loadMore,
     required this.itemBuilder,
@@ -96,6 +100,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
     this.controller,
     this.scrollController,
     this.padding,
+    this.physics,
     this.extentAfterFactor = 0.4,
     this.loadOnSubscribe = true,
     this.itemPadding = 0,
@@ -123,6 +128,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
       padding: data.padding,
       loadOnSubscribe: data.loadOnSubscribe,
       onStateChange: data.onStateChange,
+      physics: data.physics,
       itemPadding: data.itemPadding ?? 0,
     );
   }
@@ -175,6 +181,7 @@ class EndlessStreamListView<T> extends StatelessWidget {
         loadOnSubscribe: loadOnSubscribe,
         padding: padding,
         onStateChange: onStateChange,
+        physics: physics,
       ),
     );
   }
