@@ -27,5 +27,6 @@ bool isSliver(Widget widget) {
       widget is SliverSafeArea ||
       widget is SliverVisibility ||
       widget is CupertinoSliverRefreshControl ||
+      widget is SliverOverlapInjector ||
       widget is SliverFadeTransition;
 }
