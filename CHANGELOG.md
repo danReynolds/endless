@@ -1,3 +1,7 @@
+## 1.6.2
+
+* Expand sliver detector
+
 ## 1.6.1
 
 * Support physics
