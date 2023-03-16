@@ -13,5 +13,10 @@ class EndlessPaginationController<T> {
   /// Removes the given item from the scroll view.
   late void Function(T item) remove;
 
+  /// Whether the widget associated with the controller is mounted.
+  bool Function() isMounted = () {
+    return false;
+  };
+
   EndlessPaginationController();
 }

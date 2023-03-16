@@ -21,5 +21,10 @@ class EndlessStreamController<T> {
   /// Whether the stream is currently paused.
   late bool Function() isPaused;
 
+  /// Whether the widget associated with the controller is mounted.
+  bool Function() isMounted = () {
+    return false;
+  };
+
   EndlessStreamController();
 }

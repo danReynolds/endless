@@ -86,6 +86,9 @@ class _EndlessPaginationStreamBuilderState<T>
     final controller = widget.controller;
 
     if (controller != null) {
+      controller.isMounted = () {
+        return mounted;
+      };
       controller.loadMore = () {
         _streamLoadMoreController.loadMore();
       };

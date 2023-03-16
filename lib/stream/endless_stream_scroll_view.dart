@@ -3,7 +3,7 @@ import 'package:endless/stream/endless_stream_builder.dart';
 import 'package:endless/stream/endless_stream_scroll_view_data.dart';
 import 'package:endless/utils/sliver_detector.dart';
 import 'package:endless/widgets/endless_default_loading_indicator.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 
 /// Infinite loading scroll view using a CustomScrollView with the following customizable builders:

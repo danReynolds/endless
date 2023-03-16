@@ -87,6 +87,9 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
       controller.isPaused = () {
         return _isPaused;
       };
+      controller.isMounted = () {
+        return mounted;
+      };
     }
 
     _subscribeToStream();
@@ -191,7 +194,7 @@ class _EndlessStreamBuilderState<T> extends State<EndlessStreamBuilder<T>> {
     final states = _resolveStates();
 
     if (widget.onStateChange != null) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         if (_prevStates == null || !setEquals(_prevStates, states)) {
           widget.onStateChange!(states);
         }

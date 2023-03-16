@@ -1,3 +1,7 @@
+## 1.6.3
+
+* Add support for checking if controllers are attached to mounted widgets.
+
 ## 1.6.2
 
 * Expand sliver detector
